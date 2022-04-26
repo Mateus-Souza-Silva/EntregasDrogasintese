@@ -8,29 +8,29 @@
             <div class="row">
                 <div class="col-md-1">
                     <label for="entregaido" class="form-label">ID</label>
-                    <input type="number" name="entregaido" class="form-control" readonly>
+                    <input type="number" name="entregaido" class="form-control" value="${entrega.entregaido}" readonly>
                 </div>
                 <div class="col-md-2">
                     <label for="dataentrega" class="form-label text-decoration-none">Data Entrega</label>
-                    <input type="date" name="dataentrega" class="form-control" required=""/>
+                    <input type="date" name="dataentrega" class="form-control" required="" value="${entrega.dataentrega}"/>
                 </div>
                 <div class="col-md-7">
                     <label for="produtos" class="form-label">Produtos</label>
-                    <input type="text" name="produtos" class="form-control" required=""/>
+                    <input type="text" name="produtos" class="form-control" required="" value="${entrega.produtos}"/>
                 </div>
                 <div class="col-md-2">
                     <label for="valor" class="form-label">Valor</label>
-                    <input type="number" name="valor" class="form-control" required="">
+                    <input type="number" name="valor" class="form-control" required="" value="${entrega.valor}">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3">
                     <label for="recebedor" class="form-label">Recebedor</label>
-                    <input type="text" name="recebedor" class="form-control"/>                        
+                    <input type="text" name="recebedor" class="form-control" value="${entrega.recebedor}"/>                        
                 </div>
                 <div class="col-md-9">
                     <label for="observacao" class="form-label">Observação</label>
-                    <textarea class="form-control" name="observacao" rows="3"></textarea>
+                    <textarea class="form-control" name="observacao" rows="3" >${entrega.observacao}</textarea>
                 </div>
             </div>
             <div class="row">
@@ -62,7 +62,7 @@
                     <label for="cliente" class="form-label">Cliente</label>
                     <select class="form-select" aria-label="Lista de Clientes cadastrados" name="clienteido">
                         <c:forEach var="cliente" items="${cliente}">
-                            <option value="${cliente.clienteido}">${cliente.nome}</option>
+                            <option value="${cliente.clienteido}" ${cliente.clienteido==entrega.cliente.clienteido?'selected':''}>${cliente.nome}</option>
                         </c:forEach>
                     </select>                        
                 </div>

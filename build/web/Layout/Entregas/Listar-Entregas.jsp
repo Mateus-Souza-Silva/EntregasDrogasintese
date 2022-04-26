@@ -39,7 +39,7 @@
                                 <td>${entrega.cliente.nome}</td>
                                 <td>${entrega.entregador.nome}</td>
                                 <td>
-                                    <a type="button" href="#" class="btn btn-primary">
+                                    <a type="button" href="CarregarEntrega?entregaido=${entrega.entregaido}" class="btn btn-primary">
                                         <svg class="bi" width="16" height="16"><use xlink:href="#alterar"/></svg>
                                     </a>
                                 </td>

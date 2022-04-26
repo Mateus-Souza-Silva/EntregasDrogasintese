@@ -159,6 +159,20 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "entrega.recebedor,\n"
                 + "entrega.observacao,\n"
                 + "entrega.entregadorido,\n"
+                + "entrega.pagamentoido,\n"
+                + "entrega.situacaoido,\n"
+                + "entrega.clienteido\n"
+                + "FROM entrega\n"
+                + "where entrega.entregaido = ?\n"
+                + "order by entrega.dataentrega desc";
+        /*String sql = "SELECT\n"
+                + "entrega.entregaido,\n"
+                + "entrega.dataentrega,\n"
+                + "entrega.produtos,\n"
+                + "entrega.valor,\n"
+                + "entrega.recebedor,\n"
+                + "entrega.observacao,\n"
+                + "entrega.entregadorido,\n"
                 + "pessoa.nome as entregador,\n"
                 + "entrega.pagamentoido,\n"
                 + "pagamento.descricao as descricaopagamento,\n"
@@ -177,7 +191,8 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "inner join situacao on situacao.situacaoido = entrega.situacaoido\n"
                 + "inner join cliente on cliente.clienteido = entrega.clienteido\n"
                 + "inner join pessoa on pessoa.pessoaido = entregador.pessoaido\n"
-                + "order by entrega.dataentrega desc";
+                + "where entrega.entregaido = ?"
+                + "order by entrega.dataentrega desc";*/
 
         try {
             stmt = conn.prepareStatement(sql);
