@@ -48,17 +48,18 @@ public class CadastrarCobranca extends HttpServlet {
                 } else {
                     mensagem = "Problemas ao cadastrar cobranca";
                 }
-            }else if (!request.getParameter("cobrancaido").equals("")) {
+                request.setAttribute("mensagem", mensagem);
+                request.getRequestDispatcher("DadosCobranca").forward(request, response);
+            } else if (!request.getParameter("cobrancaido").equals("")) {
                 cobranca.setCobrancaido(Integer.parseInt(request.getParameter("cobrancaido")));
                 if (dao.alterar(cobranca)) {
                     mensagem = "Cobranca alterada com sucesso!";
-                }else{
+                } else {
                     mensagem = "Problemas ao alterar cobranca!";
                 }
+                request.getRequestDispatcher("ListarCobranca").forward(request, response);
             }
 
-            request.setAttribute("mensagem", mensagem);
-            request.getRequestDispatcher("DadosCobranca").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Problemas ao cadastrar cobranca! Erro: " + ex.getMessage());
             ex.printStackTrace();

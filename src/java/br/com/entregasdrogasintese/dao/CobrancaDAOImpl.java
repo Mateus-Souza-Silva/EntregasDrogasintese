@@ -45,25 +45,6 @@ public class CobrancaDAOImpl implements GenericDAO {
             stmt.setInt(6, cobranca.getSetor().getSetorido());
             stmt.setString(7, cobranca.getObservacao());
             stmt.setInt(8, cobranca.getSituacao().getSituacaoido());
-
-//            if (cobranca.getPagamento() != null) {
-//                stmt.setInt(8, cobranca.getPagamento().getPagamentoido());
-//            } else {
-//                stmt.setNull(8, Types.INTEGER);
-//            }
-
-
-//            if (cobranca.getDatapagamento() != null) {
-//                stmt.setDate(10, new java.sql.Date(cobranca.getDatapagamento().getTime()));
-//            } else {
-//                stmt.setNull(10, Types.DATE);
-//            }
-
-//            if (cobranca.getTipopagamento() != null) {
-//                stmt.setInt(11, cobranca.getTipopagamento().getTipopagamentoido());
-//            } else {
-//                stmt.setNull(11, Types.INTEGER);
-//            }
             stmt.executeUpdate();
             return true;
         } catch (Exception ex) {
