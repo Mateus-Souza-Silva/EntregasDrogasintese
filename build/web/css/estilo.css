@@ -69,6 +69,57 @@
     border-radius: 0px;
 }
 
+.fundoABERTO{
+    background-color: #ffebeb !important;
+}
+.fundoFINALIZADA{
+    background-color: #e3ffe0 !important;
+}
+.fundoVOLTOU{
+    background-color: #e4f0ff !important;
+}
+
+.fundoEntregaABERTO{
+    background-color: #e3ffe0 !important;
+}
+.fundoEntregaFINALIZADA{
+    background-color: #ffebeb !important;
+}
+.fundoEntregaVOLTOU{
+    background-color: #e4f0ff !important;
+}
+
+.corStatusABERTO{
+    color: #ff1b1b !important;
+    font-weight: bold !important;
+}
+
+.corStatusFINALIZADA{
+    color: #0f9700 !important;
+    font-weight: bold !important;
+}
+
+.corStatusVOLTOU{
+    color: #130bff !important;
+    font-weight: bold !important;
+}
+
+.corStatusEntregaABERTO{
+    color: #0f9700 !important;
+    font-weight: bold !important;
+}
+
+.corStatusEntregaFINALIZADA{
+    color: #ff1b1b !important;
+    font-weight: bold !important;
+}
+
+.corStatusEntregaVOLTOU{
+    color: #130bff !important;
+    font-weight: bold !important;
+}
+
+
 $accordion-padding-y:                     1rem;
 $accordion-padding-x:                     1.25rem;
 $accordion-color:                         $body-color;

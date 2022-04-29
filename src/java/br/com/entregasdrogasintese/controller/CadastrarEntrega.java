@@ -4,7 +4,6 @@ import br.com.entregasdrogasintese.dao.EntregaDAOImpl;
 import br.com.entregasdrogasintese.dao.GenericDAO;
 import br.com.entregasdrogasintese.model.Cliente;
 import br.com.entregasdrogasintese.model.Entrega;
-//import br.com.entregasdrogasintese.model.Entrega;
 import br.com.entregasdrogasintese.model.Entregador;
 import br.com.entregasdrogasintese.model.Pagamento;
 import br.com.entregasdrogasintese.model.Situacao;
@@ -23,10 +22,9 @@ public class CadastrarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
-        
+
         String mensagem = null;
-        String teste = null;
-        
+
         Entrega entrega = new Entrega();
         entrega.setDataentrega(Conversoes.converterData(request.getParameter("dataentrega")));
         entrega.setEntregador(new Entregador(Integer.parseInt(request.getParameter("entregadorido"))));
@@ -35,15 +33,25 @@ public class CadastrarEntrega extends HttpServlet {
         entrega.setProdutos(request.getParameter("produtos").toUpperCase());
         entrega.setRecebedor(request.getParameter("recebedor").toUpperCase());
         entrega.setSituacao(new Situacao(Integer.parseInt(request.getParameter("situacaoido"))));
-//        entrega.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
+        entrega.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
         entrega.setValor(Double.parseDouble(request.getParameter("valor")));
-        
+
         try {
             GenericDAO dao = new EntregaDAOImpl();
-            if (dao.cadastrar(entrega)) {
-                mensagem = "Entrega Cadastrada com sucesso!";
-            }else{
-                mensagem = "Problemas ao cadastrar entrega Controller";
+
+            if (request.getParameter("entregaido").equals("")) {
+                if (dao.cadastrar(entrega)) {
+                    mensagem = "Entrega Cadastrada com sucesso!";
+                } else {
+                    mensagem = "Problemas ao cadastrar entrega Controller";
+                }
+            } else if (!request.getParameter("entregaido").equals("")) {
+                entrega.setEntregaido(Integer.parseInt(request.getParameter("entregaido")));
+                if (dao.alterar(entrega)) {
+                    mensagem = "Entrega Alterada com sucesso!";
+                } else {
+                    mensagem = "Problemas ao alterar entrega!";
+                }
             }
             request.setAttribute("mensagem", mensagem);
             request.getRequestDispatcher("DadosEntrega").forward(request, response);

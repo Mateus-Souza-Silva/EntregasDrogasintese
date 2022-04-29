@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/dao/ClienteDAOImpl.java</file>
-            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/controller/CarregarCliente.java</file>
-            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Clientes/Cadastrar-Clientes.jsp</file>
-            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/controller/CadastrarCliente.java</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/dao/CobrancaDAOImpl.java</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Entregas/Listar-Entregas.jsp</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/css/estilo.css</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/dao/EntregaDAOImpl.java</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Cobranca/Listar-Cobranca.jsp</file>
         </group>
     </open-files>
 </project-private>

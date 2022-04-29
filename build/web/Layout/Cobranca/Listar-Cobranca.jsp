@@ -30,20 +30,20 @@
                     <tbody>
                         <c:forEach items="${cobranca}" var="cobranca">
                             <tr>
-                                <th scope="row">${cobranca.cobrancaido}</th>
-                                <td><fmt:formatDate pattern="dd/MM/yyy" value="${cobranca.datacobranca}"/></td>
-                                <td><fmt:formatDate pattern="dd/MM/yyy" value="${cobranca.vencimento}"/></td>
-                                <td>${cobranca.cliente.nome}</td>
-                                <td>${cobranca.valor}</td>
-                                <td>${cobranca.nfcobranca}</td>
-                                <td>${cobranca.observacao}</td>
-                                <td><fmt:formatDate pattern="dd/MM/yyy" value="${cobranca.datapagamento}"/></td>
-                                <td>${cobranca.pagamento.descricao}</td>
-                                <td>${cobranca.setor.descricao}</td>
-                                <td>${cobranca.tipopagamento.descricao}</td>
-                                <td>${cobranca.situacao.descricao}</td>
-                                <td>
-                                    <a type="button" href="#" class="btn btn-primary">
+                                <th class="fundo${cobranca.situacao.descricao}" scope="row">${cobranca.cobrancaido}</th>
+                                <td class="fundo${cobranca.situacao.descricao}"><fmt:formatDate pattern="dd/MM/yyy" value="${cobranca.datacobranca}"/></td>
+                                <td class="fundo${cobranca.situacao.descricao}"><fmt:formatDate pattern="dd/MM/yyy" value="${cobranca.vencimento}"/></td>
+                                <td class="fundo${cobranca.situacao.descricao}">${cobranca.cliente.nome}</td>
+                                <td class="fundo${cobranca.situacao.descricao}">${cobranca.valor}</td>
+                                <td class="fundo${cobranca.situacao.descricao}">${cobranca.nfcobranca}</td>
+                                <td class="fundo${cobranca.situacao.descricao}">${cobranca.observacao}</td>
+                                <td class="fundo${cobranca.situacao.descricao}"><fmt:formatDate pattern="dd/MM/yyy" value="${cobranca.datapagamento}"/></td>
+                                <td class="fundo${cobranca.situacao.descricao}">${cobranca.pagamento.descricao}</td>
+                                <td class="fundo${cobranca.situacao.descricao}">${cobranca.setor.descricao}</td>
+                                <td class="fundo${cobranca.situacao.descricao}">${cobranca.tipopagamento.descricao}</td>
+                                <td class="fundo${cobranca.situacao.descricao} corStatus${cobranca.situacao.descricao}">${cobranca.situacao.descricao}</td>
+                                <td class="fundo${cobranca.situacao.descricao}">
+                                    <a type="button" href="CarregarCobranca?cobrancaido=${cobranca.cobrancaido}" class="btn btn-dark">
                                         <svg class="bi" width="16" height="16"><use xlink:href="#alterar"/></svg>
                                     </a>
                                 </td>

@@ -42,14 +42,14 @@
                         </c:forEach>                    
                     </select>
                 </div>
-                <%--<div class="col-md-2">
+                <div class="col-md-2">
                     <label for="pagamento" class="form-label">Pagamento</label>
                     <select class="form-select" aria-label="Lista de Formas de Pagamento" name="pagamentoido">
                         <c:forEach var="pagamento" items="${pagamento}">
                             <option value="${pagamento.pagamentoido}" ${pagamento.pagamentoido==entrega.pagamento.pagamentoido?'selected':''}>${pagamento.descricao}</option>
                         </c:forEach>
                     </select>
-                </div>--%>
+                </div>
                 <div class="col-md-2">
                     <label for="situacao" class="form-label">Situação</label>
                     <select class="form-select" aria-label="Lista de Situação da entrega" name="situacaoido">

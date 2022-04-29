@@ -8,15 +8,15 @@
             <div class="row">
                 <div class="col-md-1"> 
                     <label for="cobrancaido" class="form-label">ID</label>
-                    <input type="number" name="cobrancaido" class="form-control" readonly>
+                    <input type="number" name="cobrancaido" class="form-control" value="${cobranca.cobrancaido}" readonly>
                 </div>
                 <div class="col-md-2">
                     <label for="datacobranca" class="form-label">Data Cobrança</label>
-                    <input type="date" name="datacobranca" class="form-control" required=""/>
+                    <input type="date" name="datacobranca" class="form-control" value="${cobranca.datacobranca}" required=""/>
                 </div>
                 <div class="col-md-2">
                     <label for="vencimento" class="form-label">Data Vencimento</label>
-                    <input type="date" name="vencimento" id="vencimento" class="form-control"/>                        
+                    <input type="date" name="vencimento" id="vencimento" value="${cobranca.vencimento}" class="form-control"/>                        
                 </div>
                 <div class="col-md-5">
                     <label for="cliente" class="form-label">Cliente</label>
@@ -28,21 +28,21 @@
                 </div>
                 <div class="col-md-2">
                     <label for="valor" class="form-label">Valor</label>
-                    <input type="number" name="valor" step="0.01" class="form-control"/>
+                    <input type="number" name="valor" step="0.01" class="form-control" value="${cobranca.valor}"/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3">
                     <label for="nfcobranca" class="form-label">NF Cobrança</label>
-                    <input type="text" name="nfcobranca" class="form-control"/>                        
+                    <input type="text" name="nfcobranca" class="form-control" value="${cobranca.nfcobranca}"/>                        
                 </div>                        
                 <div class="col-md-9">
                     <label for="observacao" class="form-label">Observação</label>
-                    <textarea class="form-control" name="observacao" rows="3"></textarea>
+                    <textarea class="form-control" name="observacao" rows="3">${cobranca.observacao}</textarea>
                 </div>
             </div>
             <div class="row">
-                <%--<div class="col-md-2">
+                <div class="col-md-2">
                     <label for="datapagamento" class="form-label">Data Pagamento</label>
                     <input type="date" name="datapagamento" class="form-control"/>
                 </div>                        
@@ -53,7 +53,7 @@
                             <option value="${pagamento.pagamentoido}" ${pagamento.pagamentoido==cobranca.pagamento.pagamentoido?'selected':''}>${pagamento.descricao}</option>
                         </c:forEach>                   
                     </select>
-                </div>--%>
+                </div>
                 <div class="col-md-2">
                     <label for="setor" class="form-label">Setor</label>
                     <select class="form-select" aria-label="Lista de setor" name="setorido">
@@ -62,14 +62,14 @@
                         </c:forEach>                   
                     </select>
                 </div>
-                <%--<div class="col-md-2">
+                <div class="col-md-2">
                     <label for="tipopagamento" class="form-label">Tipo Pagamento</label>
                     <select class="form-select" aria-label="Lista de Tipo Pagamento" name="tipopagamentoido">
                         <c:forEach var="tipopagamento" items="${tipopagamento}">
                             <option value="${tipopagamento.tipopagamentoido}" ${tipopagamento.tipopagamentoido==cobranca.tipopagamento.tipopagamentoido?'selected':''}>${tipopagamento.descricao}</option>
                         </c:forEach>                   
                     </select>
-                </div>--%>
+                </div>
                 <div class="col-md-2">
                     <label for="situacao" class="form-label">Situação</label>
                     <select class="form-select" aria-label="Lista de Situacoes" name="situacaoido">

@@ -90,7 +90,7 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "inner join situacao on situacao.situacaoido = entrega.situacaoido\n"
                 + "inner join cliente on cliente.clienteido = entrega.clienteido\n"
                 + "inner join pessoa on pessoa.pessoaido = entregador.pessoaido\n"
-                + "order by entrega.dataentrega desc";
+                + "order by entrega.entregaido desc";
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -165,34 +165,6 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "FROM entrega\n"
                 + "where entrega.entregaido = ?\n"
                 + "order by entrega.dataentrega desc";
-        /*String sql = "SELECT\n"
-                + "entrega.entregaido,\n"
-                + "entrega.dataentrega,\n"
-                + "entrega.produtos,\n"
-                + "entrega.valor,\n"
-                + "entrega.recebedor,\n"
-                + "entrega.observacao,\n"
-                + "entrega.entregadorido,\n"
-                + "pessoa.nome as entregador,\n"
-                + "entrega.pagamentoido,\n"
-                + "pagamento.descricao as descricaopagamento,\n"
-                + "entrega.situacaoido,\n"
-                + "situacao.descricao as descricaosituacao,\n"
-                + "entrega.clienteido,\n"
-                + "(SELECT\n"
-                + "pessoa.nome\n"
-                + "from entrega e\n"
-                + "inner join cliente on cliente.clienteido = e.clienteido\n"
-                + "INNER join pessoa on pessoa.pessoaido = cliente.pessoaido\n"
-                + "where entrega.entregaido = e.entregaido) as clientenome\n"
-                + "FROM entrega\n"
-                + "inner join entregador on entregador.entregadorido = entrega.entregadorido\n"
-                + "inner join pagamento on pagamento.pagamentoido = entrega.pagamentoido\n"
-                + "inner join situacao on situacao.situacaoido = entrega.situacaoido\n"
-                + "inner join cliente on cliente.clienteido = entrega.clienteido\n"
-                + "inner join pessoa on pessoa.pessoaido = entregador.pessoaido\n"
-                + "where entrega.entregaido = ?"
-                + "order by entrega.dataentrega desc";*/
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -253,7 +225,11 @@ public class EntregaDAOImpl implements GenericDAO {
             stmt.setInt(8, entrega.getCliente().getClienteido());
             stmt.setInt(9, entrega.getEntregador().getEntregadorido());
             stmt.setInt(10, entrega.getEntregaido());
+            
+            stmt.executeUpdate();
             return true;
+            
+            
         } catch (Exception ex) {
             System.out.println("Problemas ao alterar Entrega DAO! Erro:" + ex.getMessage());
             ex.printStackTrace();

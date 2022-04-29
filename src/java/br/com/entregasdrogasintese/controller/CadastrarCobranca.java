@@ -32,30 +32,31 @@ public class CadastrarCobranca extends HttpServlet {
         cobranca.setDatapagamento(Conversoes.converterData(request.getParameter("datapagamento")));
         cobranca.setNfcobranca(request.getParameter("nfcobranca").toUpperCase());
         cobranca.setObservacao(request.getParameter("observacao").toUpperCase());
-        if (request.getParameter("pagamentoido") != null) {
-            cobranca.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
-        } else {
-            cobranca.setPagamento(null);
-        };
+        cobranca.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
         cobranca.setSetor(new Setor(Integer.parseInt(request.getParameter("setorido"))));
         cobranca.setSituacao(new Situacao(Integer.parseInt(request.getParameter("situacaoido"))));
-        
-        if (request.getParameter("tipopagamentoido") != null) {
-            cobranca.setTipopagamento(new TipoPagamento(Integer.parseInt(request.getParameter("tipopagamentoido"))));            
-        }else{
-            cobranca.setTipopagamento(null);
-        }
-                
+        cobranca.setTipopagamento(new TipoPagamento(Integer.parseInt(request.getParameter("tipopagamentoido"))));
         cobranca.setValor(Double.parseDouble(request.getParameter("valor")));
         cobranca.setVencimento(Conversoes.converterData(request.getParameter("vencimento")));
 
         try {
             GenericDAO dao = new CobrancaDAOImpl();
-            if (dao.cadastrar(cobranca)) {
-                mensagem = "Cobranca cadastrada com sucesso!";
-            } else {
-                mensagem = "Problemas ao cadastrar cobranca";
+
+            if (request.getParameter("cobrancaido").equals("")) {
+                if (dao.cadastrar(cobranca)) {
+                    mensagem = "Cobranca cadastrada com sucesso!";
+                } else {
+                    mensagem = "Problemas ao cadastrar cobranca";
+                }
+            }else if (!request.getParameter("cobrancaido").equals("")) {
+                cobranca.setCobrancaido(Integer.parseInt(request.getParameter("cobrancaido")));
+                if (dao.alterar(cobranca)) {
+                    mensagem = "Cobranca alterada com sucesso!";
+                }else{
+                    mensagem = "Problemas ao alterar cobranca!";
+                }
             }
+
             request.setAttribute("mensagem", mensagem);
             request.getRequestDispatcher("DadosCobranca").forward(request, response);
         } catch (Exception ex) {

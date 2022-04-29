@@ -1,13 +1,15 @@
 package br.com.entregasdrogasintese.controller;
 
 import br.com.entregasdrogasintese.dao.ClienteDAOImpl;
-import br.com.entregasdrogasintese.dao.EntregaDAOImpl;
-import br.com.entregasdrogasintese.dao.EntregadorDAOImpl;
+import br.com.entregasdrogasintese.dao.CobrancaDAOImpl;
 import br.com.entregasdrogasintese.dao.GenericDAO;
 import br.com.entregasdrogasintese.dao.PagamentoDAOImpl;
+import br.com.entregasdrogasintese.dao.SetorDAOImpl;
 import br.com.entregasdrogasintese.dao.SituacaoDAOImpl;
+import br.com.entregasdrogasintese.dao.TipoPagamentoDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Types;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,35 +20,39 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mateus
  */
-@WebServlet(name = "CarregarEntrega", urlPatterns = {"/CarregarEntrega"})
-public class CarregarEntrega extends HttpServlet {
+@WebServlet(name = "CarregarCobranca", urlPatterns = {"/CarregarCobranca"})
+public class CarregarCobranca extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
         try {
-            int entregaido = Integer.parseInt(request.getParameter("entregaido"));
-
-            GenericDAO daoEntregador = new EntregadorDAOImpl();
-            request.setAttribute("entregador", daoEntregador.listar());
-
+            int cobrancaido = Integer.parseInt(request.getParameter("cobrancaido"));
+            
+            GenericDAO daoCliente = new ClienteDAOImpl();
+            request.setAttribute("cliente", daoCliente.listar());
+            
             GenericDAO daoPagamento = new PagamentoDAOImpl();
             request.setAttribute("pagamento", daoPagamento.listar());
             
+            GenericDAO daoTipoPagamento = new TipoPagamentoDAOImpl();
+            request.setAttribute("tipopagamento", daoTipoPagamento.listar());
+            
             GenericDAO daoSituacao = new SituacaoDAOImpl();
             request.setAttribute("situacao", daoSituacao.listar());
-
-            GenericDAO daoCliente = new ClienteDAOImpl();
-            request.setAttribute("cliente", daoCliente.listar());
-
-            GenericDAO dao = new EntregaDAOImpl();
-            request.setAttribute("entrega", dao.carregar(entregaido));
-
-            request.getRequestDispatcher("Layout/Entregas/Cadastrar-Entrega.jsp").forward(request, response);
+            
+            GenericDAO daoSetor = new SetorDAOImpl();
+            request.setAttribute("setor", daoSetor.listar());
+            
+            GenericDAO dao = new CobrancaDAOImpl();
+            request.setAttribute("cobranca", dao.carregar(cobrancaido));
+            
+            request.getRequestDispatcher("Layout/Cobranca/Cadastrar-Cobranca.jsp").forward(request, response);
         } catch (Exception ex) {
-            System.out.println("Erro ao carregar EntregaCTR! Erro: " + ex.getMessage());
+            System.out.println("Erro ao carrega Cobranca CTRL! Erro:" + ex.getMessage());
             ex.printStackTrace();
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

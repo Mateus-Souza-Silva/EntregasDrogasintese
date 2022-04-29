@@ -33,7 +33,7 @@ public class CobrancaDAOImpl implements GenericDAO {
         PreparedStatement stmt = null;
 
         String sql = "insert into cobranca (datacobranca, nfcobranca, clienteido, valor, vencimento, setorido, observacao, "
-                + "pagamentoido, situacaoido, datapagamento, tipopagamentoido) values(?,?,?,?,?,?,?,?,?,?,?)";
+                + "situacaoido) values(?,?,?,?,?,?,?,?)";
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -44,26 +44,26 @@ public class CobrancaDAOImpl implements GenericDAO {
             stmt.setDate(5, new java.sql.Date(cobranca.getVencimento().getTime()));
             stmt.setInt(6, cobranca.getSetor().getSetorido());
             stmt.setString(7, cobranca.getObservacao());
+            stmt.setInt(8, cobranca.getSituacao().getSituacaoido());
 
-            if (cobranca.getPagamento() != null) {
-                stmt.setInt(8, cobranca.getPagamento().getPagamentoido());
-            } else {
-                stmt.setNull(8, Types.INTEGER);
-            }
+//            if (cobranca.getPagamento() != null) {
+//                stmt.setInt(8, cobranca.getPagamento().getPagamentoido());
+//            } else {
+//                stmt.setNull(8, Types.INTEGER);
+//            }
 
-            stmt.setInt(9, cobranca.getSituacao().getSituacaoido());
 
-            if (cobranca.getDatapagamento() != null) {
-                stmt.setDate(10, new java.sql.Date(cobranca.getDatapagamento().getTime()));
-            } else {
-                stmt.setNull(10, Types.DATE);
-            }
+//            if (cobranca.getDatapagamento() != null) {
+//                stmt.setDate(10, new java.sql.Date(cobranca.getDatapagamento().getTime()));
+//            } else {
+//                stmt.setNull(10, Types.DATE);
+//            }
 
-            if (cobranca.getTipopagamento() != null) {
-                stmt.setInt(11, cobranca.getTipopagamento().getTipopagamentoido());
-            } else {
-                stmt.setNull(11, Types.INTEGER);
-            }
+//            if (cobranca.getTipopagamento() != null) {
+//                stmt.setInt(11, cobranca.getTipopagamento().getTipopagamentoido());
+//            } else {
+//                stmt.setNull(11, Types.INTEGER);
+//            }
             stmt.executeUpdate();
             return true;
         } catch (Exception ex) {
@@ -173,12 +173,107 @@ public class CobrancaDAOImpl implements GenericDAO {
 
     @Override
     public Object carregar(int idObject) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cobranca cobranca = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT\n"
+                + "	cobranca.cobrancaido,\n"
+                + "    cobranca.datacobranca,\n"
+                + "    cobranca.nfcobranca,\n"
+                + "    cobranca.clienteido,\n"
+                + "    cobranca.valor,\n"
+                + "    cobranca.vencimento,\n"
+                + "    cobranca.setorido,\n"
+                + "    cobranca.observacao,\n"
+                + "    cobranca.pagamentoido,\n"
+                + "    cobranca.situacaoido,\n"
+                + "    cobranca.datapagamento,\n"
+                + "    cobranca.tipopagamentoido\n"
+                + "from cobranca\n"
+                + "WHERE cobranca.cobrancaido = ?";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idObject);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                cobranca = new Cobranca();
+                cobranca.setCobrancaido(rs.getInt("cobrancaido"));
+                cobranca.setDatacobranca(rs.getDate("datacobranca"));
+                cobranca.setNfcobranca(rs.getString("nfcobranca"));
+                cobranca.setCliente(new Cliente(rs.getInt("clienteido")));
+                cobranca.setValor(rs.getDouble("valor"));
+                cobranca.setVencimento(rs.getDate("vencimento"));
+                cobranca.setSetor(new Setor(rs.getInt("setorido")));
+                cobranca.setObservacao(rs.getString("observacao"));
+                cobranca.setPagamento(new Pagamento(rs.getInt("pagamentoido")));
+                cobranca.setSituacao(new Situacao(rs.getInt("situacaoido")));
+                cobranca.setDatapagamento(rs.getDate("datapagamento"));
+                cobranca.setTipopagamento(new TipoPagamento(rs.getInt("tipopagamentoido")));
+            }
+        } catch (Exception ex) {
+            System.out.println("Problemas ao carregar Cobranca! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                ConnectionFactory.closeConnection(conn, stmt, rs);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar parametros de conexao! Erro:" + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+        return cobranca;
     }
 
     @Override
     public Boolean alterar(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cobranca cobranca = (Cobranca) object;
+        PreparedStatement stmt = null;
+        String sql = "UPDATE cobranca set\n"
+                + "cobranca.datacobranca = ?,\n"
+                + "cobranca.nfcobranca = ?,\n"
+                + "cobranca.clienteido = ?,\n"
+                + "cobranca.valor = ?,\n"
+                + "cobranca.vencimento = ?,\n"
+                + "cobranca.setorido = ?,\n"
+                + "cobranca.observacao = ?,\n"
+                + "cobranca.pagamentoido = ?,\n"
+                + "cobranca.situacaoido = ?,\n"
+                + "cobranca.datapagamento = ?,\n"
+                + "cobranca.tipopagamentoido = ?\n"
+                + "where cobranca.cobrancaido = ?";
+        
+        try {
+            stmt = conn.prepareCall(sql);
+            stmt.setDate(1, new java.sql.Date(cobranca.getDatacobranca().getTime()));
+            stmt.setString(2, cobranca.getNfcobranca());
+            stmt.setInt(3, cobranca.getCliente().getClienteido());
+            stmt.setDouble(4, cobranca.getValor());
+            stmt.setDate(5, new java.sql.Date(cobranca.getVencimento().getTime()));
+            stmt.setInt(6, cobranca.getSetor().getSetorido());
+            stmt.setString(7, cobranca.getObservacao());
+            stmt.setInt(8, cobranca.getPagamento().getPagamentoido());
+            stmt.setInt(9, cobranca.getSituacao().getSituacaoido());
+            stmt.setDate(10, new java.sql.Date(cobranca.getDatapagamento().getTime()));
+            stmt.setInt(11, cobranca.getTipopagamento().getTipopagamentoido());
+            stmt.setInt(12, cobranca.getCobrancaido());
+            
+            stmt.executeUpdate();
+            return true;
+            
+        } catch (Exception ex) {
+            System.out.println("Problemas ao alterar cobranca DAO! Erro:" + ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }finally{
+            try {
+                ConnectionFactory.closeConnection(conn, stmt);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar parametros de conexao! Erro: " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
     }
 
     public Object listarQuantidadeCobranca(Integer cobrancaido) {

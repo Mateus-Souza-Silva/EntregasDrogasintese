@@ -22,24 +22,24 @@
                             <th scope="col">Situacao</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Entregador</th>
-                            <th scope="col">Dados</th>
+                            <th scope="col">Alterar</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${entrega}" var="entrega">
                             <tr>
-                                <th scope="row">${entrega.entregaido}</th>
-                                <td><fmt:formatDate pattern="dd/MM/yyy" value="${entrega.dataentrega}"/></td>
-                                <td>${entrega.produtos}</td>
-                                <td>${entrega.valor}</td>
-                                <td>${entrega.recebedor}</td>
-                                <td>${entrega.observacao}</td>
-                                <td>${entrega.pagamento.descricao}</td>
-                                <td>${entrega.situacao.descricao}</td>
-                                <td>${entrega.cliente.nome}</td>
-                                <td>${entrega.entregador.nome}</td>
-                                <td>
-                                    <a type="button" href="CarregarEntrega?entregaido=${entrega.entregaido}" class="btn btn-primary">
+                                <th class="fundoEntrega${entrega.situacao.descricao}" scope="row">${entrega.entregaido}</th>
+                                <td class="fundoEntrega${entrega.situacao.descricao}"><fmt:formatDate pattern="dd/MM/yyy" value="${entrega.dataentrega}"/></td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.produtos}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.valor}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.recebedor}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.observacao}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.pagamento.descricao}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao} corStatusEntrega${entrega.situacao.descricao}">${entrega.situacao.descricao}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.cliente.nome}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.entregador.nome}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">
+                                    <a type="button" href="CarregarEntrega?entregaido=${entrega.entregaido}" class="btn btn-dark">
                                         <svg class="bi" width="16" height="16"><use xlink:href="#alterar"/></svg>
                                     </a>
                                 </td>
