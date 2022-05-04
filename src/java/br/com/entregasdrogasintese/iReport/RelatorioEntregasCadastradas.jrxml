@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioEntregasCadastradas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07ddc442-d204-4895-a1ef-6d150a870cb7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+	entrega.entregaido,
+    entrega.dataentrega,
+    entrega.produtos,
+    entrega.valor,
+    entrega.recebedor,
+    entrega.entregadorido,
+    pessoa.nome,
+    entrega.clienteido,
+    (SELECT pessoa.nome
+    from pessoa, cliente, entrega en
+    where pessoa.pessoaido = cliente.pessoaido
+    and cliente.clienteido = en.clienteido
+    and en.entregaido = entrega.entregaido) as clientenome
+from entrega
+inner join entregador on entregador.entregadorido = entrega.entregadorido
+inner join pessoa on pessoa.pessoaido = entregador.pessoaido
+and entrega.dataentrega = CURRENT_DATE]]>
+	</queryString>
+	<field name="entregaido" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataentrega" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="produtos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="recebedor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="entregadorido" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clienteido" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clientenome" class="java.lang.String"/>
+	<variable name="valor_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="entregaido_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{entregaido}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement x="35" y="12" width="484" height="38" uuid="6b3eb6b8-80a4-4686-81e1-6daa47749835"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Entregas Cadastradas Hoje]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="40" height="15" uuid="797b6282-efb1-45eb-bb7a-8f4525391e93"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="2" width="45" height="15" uuid="e77d6d13-6907-477e-838d-6a903afdf08b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="2" width="100" height="15" uuid="3dafeeb9-1f6f-4781-b996-b4efb8a5a994"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Produtos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="2" width="61" height="15" uuid="023939d9-1dc4-40c1-90dc-b355ff2cae1b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="2" width="100" height="15" uuid="76f83c0a-ab34-4c18-a54d-c22b6cacfff2"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recebedor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="18deae20-97fc-437d-aeec-d096cd2a0c6d"/>
+			</line>
+			<staticText>
+				<reportElement x="391" y="2" width="100" height="15" uuid="6e625785-7e4a-4d23-a793-f4a8fa89504b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entregador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="2" width="99" height="15" uuid="aea6e2fb-1c9f-4a29-a1e9-95e8d0cb5f35"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="40" height="20" uuid="c7583978-7924-49aa-8660-c92d7842423b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{entregaido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="45" height="20" uuid="a92dd464-08cd-451a-becd-9861f4ce167e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{dataentrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="0" width="100" height="20" uuid="0928c96a-3332-486b-aace-06ac5a235127"/>
+				<textFieldExpression><![CDATA[$F{produtos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="0" width="61" height="20" uuid="74aff8e1-c005-4470-9548-c66a94b8be0f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="0" width="100" height="20" uuid="dfe18a91-2d82-415f-bcfb-54c1cdd9a0f6"/>
+				<textFieldExpression><![CDATA[$F{recebedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="391" y="0" width="100" height="20" uuid="35ad1f1d-b4c4-4589-81a0-06de30429cad"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="0" width="100" height="20" uuid="a835f6bf-6e63-4f60-96df-293d733bb231"/>
+				<textFieldExpression><![CDATA[$F{clientenome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="80a81b6a-5b23-4a76-b521-b99c1ff94ac9"/>
+			</line>
+			<textField>
+				<reportElement x="494" y="3" width="61" height="20" uuid="48d558c2-25f2-4a35-9419-f466b89a119c"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{valor_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="3" width="29" height="20" uuid="ce20ed22-9029-400c-81b5-ba33fdaff253"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="29" y="3" width="100" height="20" uuid="2a1ab178-bbea-4efa-83b5-3e3c720f9f8e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{entregaido_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

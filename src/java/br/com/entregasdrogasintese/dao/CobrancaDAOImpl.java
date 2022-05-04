@@ -224,7 +224,7 @@ public class CobrancaDAOImpl implements GenericDAO {
                 + "cobranca.datapagamento = ?,\n"
                 + "cobranca.tipopagamentoido = ?\n"
                 + "where cobranca.cobrancaido = ?";
-        
+
         try {
             stmt = conn.prepareCall(sql);
             stmt.setDate(1, new java.sql.Date(cobranca.getDatacobranca().getTime()));
@@ -236,18 +236,26 @@ public class CobrancaDAOImpl implements GenericDAO {
             stmt.setString(7, cobranca.getObservacao());
             stmt.setInt(8, cobranca.getPagamento().getPagamentoido());
             stmt.setInt(9, cobranca.getSituacao().getSituacaoido());
-            stmt.setDate(10, new java.sql.Date(cobranca.getDatapagamento().getTime()));
+            
+            System.out.println("Data: " + cobranca.getDatapagamento());
+             
+            if (cobranca.getDatapagamento() == null) {
+                stmt.setDate(10, null);
+            } else {
+                stmt.setDate(10, new java.sql.Date(cobranca.getDatapagamento().getTime()));
+            }
+            
             stmt.setInt(11, cobranca.getTipopagamento().getTipopagamentoido());
             stmt.setInt(12, cobranca.getCobrancaido());
-            
+
             stmt.executeUpdate();
             return true;
-            
+
         } catch (Exception ex) {
             System.out.println("Problemas ao alterar cobranca DAO! Erro:" + ex.getMessage());
             ex.printStackTrace();
             return false;
-        }finally{
+        } finally {
             try {
                 ConnectionFactory.closeConnection(conn, stmt);
             } catch (Exception ex) {

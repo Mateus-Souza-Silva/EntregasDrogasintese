@@ -10,26 +10,30 @@ public class Conversoes {
 
     public static Date converterData(String data) {
         if (data != null) {
-            try {
-                DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-                //System.out.println("ddddddddddd "+data);
-                if ((data != null) || (!data.trim().equals(""))) {
-                    //System.out.println("aaaaaaaaaaaa "+fmt.parse(data));
-                    return fmt.parse(data);
+            if (!data.equals("")) {
+                try {
+                    DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                    //System.out.println("ddddddddddd "+data);
+                    if ((data != null) || (!data.trim().equals(""))) {
+                        //System.out.println("aaaaaaaaaaaa "+fmt.parse(data));
+                        return fmt.parse(data);
 
-                } else {
+                    } else {
+                        return null;
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Problemas ao converter data!"
+                            + "\n Erro: " + ex.getMessage());
+                    ex.printStackTrace();
                     return null;
                 }
-            } catch (Exception ex) {
-                System.out.println("Problemas ao converter data!"
-                        + "\n Erro: " + ex.getMessage());
-                ex.printStackTrace();
+            } else {
+                System.out.println("Campo nao era para cadastrar");
                 return null;
             }
-        }else{
-            System.out.println("Campo nao era para cadastrar");
-        }
+        } else {
             return null;
+        }
     }
 
     public static Time converterHora(String hora) throws ParseException {

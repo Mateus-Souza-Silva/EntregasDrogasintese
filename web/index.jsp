@@ -14,10 +14,12 @@
                         </p>
                     </div>
                     <button type="button" class="btn btn-light botao-card">
-                        <div>
-                            Ver Relatório
-                        </div>
-                    </button>
+                        <a href="${pageContext.request.contextPath}\Relatorio?param=2" style="color: black">
+                            <div>
+                                Ver Relatório
+                            </div>
+                        </a>
+                    </button>                        
                 </div>
             </div>
             <div class="col">
