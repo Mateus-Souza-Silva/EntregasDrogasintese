@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <label for="datapagamento" class="form-label">Data Pagamento</label>
-                    <input type="date" name="datapagamento" class="form-control" ${cobranca.datapagamento}/>
+                    <input type="date" name="datapagamento" class="form-control" value="${cobranca.datapagamento}"/>
                 </div>                        
                 <div class="col-md-2">
                     <label for="pagamento" class="form-label">Pagamento</label>

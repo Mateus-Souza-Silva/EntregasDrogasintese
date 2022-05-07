@@ -71,7 +71,7 @@ public class CobrancaDAOImpl implements GenericDAO {
                 + "	cobranca.cobrancaido,\n"
                 + "	cobranca.datacobranca,\n"
                 + "	coalesce(cobranca.nfcobranca,'') AS nfcobranca,\n"
-                + "	cobranca.valor,\n"
+                + "	if(COALESCE(cobranca.valor - SUM(pagamento_parcela.valor_pagamento_parcela),0)>0,COALESCE(cobranca.valor - SUM(pagamento_parcela.valor_pagamento_parcela),0),cobranca.valor) AS valor,\n"
                 + "	coalesce(cobranca.vencimento,'') AS vencimento,\n"
                 + "	COALESCE(cobranca.observacao,'') AS observacao,\n"
                 + "	cobranca.datapagamento AS datapagamento,\n"
@@ -85,14 +85,16 @@ public class CobrancaDAOImpl implements GenericDAO {
                 + "	coalesce(tipopagamento.descricao,'') AS descricaotipopagamento,\n"
                 + "	coalesce(cobranca.pagamentoido,'') AS pagamentoido,\n"
                 + "	coalesce(pagamento.descricao,'') AS descricaopagamento\n"
-                + "FROM cobranca\n"
-                + "INNER JOIN cliente ON cliente.clienteido = cobranca.clienteido\n"
-                + "INNER JOIN pessoa ON pessoa.pessoaido = cliente.pessoaido\n"
-                + "INNER JOIN setor ON setor.setorido = cobranca.setorido\n"
-                + "INNER JOIN situacao ON situacao.situacaoido = cobranca.situacaoido\n"
-                + "left JOIN tipopagamento ON tipopagamento.tipopagamentoido = cobranca.tipopagamentoido\n"
-                + "LEFT JOIN pagamento ON pagamento.pagamentoido = cobranca.pagamentoido\n"
-                + "ORDER BY cobranca.cobrancaido desc";
+                + "	FROM cobranca\n"
+                + "	INNER JOIN cliente ON cliente.clienteido = cobranca.clienteido\n"
+                + "	INNER JOIN pessoa ON pessoa.pessoaido = cliente.pessoaido\n"
+                + "	INNER JOIN setor ON setor.setorido = cobranca.setorido\n"
+                + "	INNER JOIN situacao ON situacao.situacaoido = cobranca.situacaoido\n"
+                + "	left JOIN tipopagamento ON tipopagamento.tipopagamentoido = cobranca.tipopagamentoido\n"
+                + "	LEFT JOIN pagamento ON pagamento.pagamentoido = cobranca.pagamentoido\n"
+                + "	LEFT JOIN pagamento_parcela ON (cobranca.cobrancaido = pagamento_parcela.cobrancaido)	\n"
+                + "	GROUP BY 1\n"
+                + "	ORDER BY cobrancaido desc";
         try {
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
@@ -159,19 +161,31 @@ public class CobrancaDAOImpl implements GenericDAO {
         ResultSet rs = null;
         String sql = "SELECT\n"
                 + "	cobranca.cobrancaido,\n"
-                + "    cobranca.datacobranca,\n"
-                + "    cobranca.nfcobranca,\n"
-                + "    cobranca.clienteido,\n"
-                + "    cobranca.valor,\n"
-                + "    cobranca.vencimento,\n"
-                + "    cobranca.setorido,\n"
-                + "    cobranca.observacao,\n"
-                + "    cobranca.pagamentoido,\n"
-                + "    cobranca.situacaoido,\n"
-                + "    cobranca.datapagamento,\n"
-                + "    cobranca.tipopagamentoido\n"
-                + "from cobranca\n"
-                + "WHERE cobranca.cobrancaido = ?";
+                + "	cobranca.datacobranca,\n"
+                + "	coalesce(cobranca.nfcobranca,'') AS nfcobranca,\n"
+                + "	if(COALESCE(cobranca.valor - SUM(pagamento_parcela.valor_pagamento_parcela),0)>0,COALESCE(cobranca.valor - SUM(pagamento_parcela.valor_pagamento_parcela),0),cobranca.valor) AS valor,\n"
+                + "	coalesce(cobranca.vencimento,'') AS vencimento,\n"
+                + "	COALESCE(cobranca.observacao,'') AS observacao,\n"
+                + "	cobranca.datapagamento AS datapagamento,\n"
+                + "	cobranca.clienteido,\n"
+                + "	pessoa.nome as nomecliente,\n"
+                + "	cobranca.setorido,\n"
+                + "	setor.descricao as descricaosetor,\n"
+                + "	cobranca.situacaoido,\n"
+                + "	situacao.descricao as descricaosituacao,\n"
+                + "	coalesce(cobranca.tipopagamentoido,'') AS tipopagamentoido,\n"
+                + "	coalesce(tipopagamento.descricao,'') AS descricaotipopagamento,\n"
+                + "	coalesce(cobranca.pagamentoido,'') AS pagamentoido,\n"
+                + "	coalesce(pagamento.descricao,'') AS descricaopagamento\n"
+                + "	FROM cobranca\n"
+                + "	INNER JOIN cliente ON cliente.clienteido = cobranca.clienteido\n"
+                + "	INNER JOIN pessoa ON pessoa.pessoaido = cliente.pessoaido\n"
+                + "	INNER JOIN setor ON setor.setorido = cobranca.setorido\n"
+                + "	INNER JOIN situacao ON situacao.situacaoido = cobranca.situacaoido\n"
+                + "	left JOIN tipopagamento ON tipopagamento.tipopagamentoido = cobranca.tipopagamentoido\n"
+                + "	LEFT JOIN pagamento ON pagamento.pagamentoido = cobranca.pagamentoido\n"
+                + "	LEFT JOIN pagamento_parcela ON (cobranca.cobrancaido = pagamento_parcela.cobrancaido)	\n"
+                + "	where cobranca.cobrancaido = ?";
 
         try {
             stmt = conn.prepareStatement(sql);
@@ -215,7 +229,6 @@ public class CobrancaDAOImpl implements GenericDAO {
                 + "cobranca.datacobranca = ?,\n"
                 + "cobranca.nfcobranca = ?,\n"
                 + "cobranca.clienteido = ?,\n"
-                + "cobranca.valor = ?,\n"
                 + "cobranca.vencimento = ?,\n"
                 + "cobranca.setorido = ?,\n"
                 + "cobranca.observacao = ?,\n"
@@ -223,32 +236,48 @@ public class CobrancaDAOImpl implements GenericDAO {
                 + "cobranca.situacaoido = ?,\n"
                 + "cobranca.datapagamento = ?,\n"
                 + "cobranca.tipopagamentoido = ?\n"
-                + "where cobranca.cobrancaido = ?";
+                + "where cobranca.cobrancaido = ?;";
+
+        String sqll = "insert into pagamento_parcela(valor_pagamento_parcela, cobrancaido)values(?,?)";
 
         try {
             stmt = conn.prepareCall(sql);
             stmt.setDate(1, new java.sql.Date(cobranca.getDatacobranca().getTime()));
             stmt.setString(2, cobranca.getNfcobranca());
             stmt.setInt(3, cobranca.getCliente().getClienteido());
-            stmt.setDouble(4, cobranca.getValor());
-            stmt.setDate(5, new java.sql.Date(cobranca.getVencimento().getTime()));
-            stmt.setInt(6, cobranca.getSetor().getSetorido());
-            stmt.setString(7, cobranca.getObservacao());
-            stmt.setInt(8, cobranca.getPagamento().getPagamentoido());
-            stmt.setInt(9, cobranca.getSituacao().getSituacaoido());
-            
-            System.out.println("Data: " + cobranca.getDatapagamento());
-             
+            stmt.setDate(4, new java.sql.Date(cobranca.getVencimento().getTime()));
+            stmt.setInt(5, cobranca.getSetor().getSetorido());
+            stmt.setString(6, cobranca.getObservacao());
+            stmt.setInt(7, cobranca.getPagamento().getPagamentoido());
+            stmt.setInt(8, cobranca.getSituacao().getSituacaoido());
+
+//            System.out.println("Data: " + cobranca.getDatapagamento());
             if (cobranca.getDatapagamento() == null) {
-                stmt.setDate(10, null);
+                stmt.setDate(9, null);
             } else {
-                stmt.setDate(10, new java.sql.Date(cobranca.getDatapagamento().getTime()));
+                stmt.setDate(9, new java.sql.Date(cobranca.getDatapagamento().getTime()));
             }
-            
-            stmt.setInt(11, cobranca.getTipopagamento().getTipopagamentoido());
-            stmt.setInt(12, cobranca.getCobrancaido());
+
+            stmt.setInt(10, cobranca.getTipopagamento().getTipopagamentoido());
+            stmt.setInt(11, cobranca.getCobrancaido());
 
             stmt.executeUpdate();
+
+            try {
+                stmt = conn.prepareCall(sqll);
+                System.out.println("Valor:" + cobranca.getValor());
+                stmt.setDouble(1, cobranca.getValor());
+
+                System.out.println("Cobrancaido " + cobranca.getCobrancaido());
+                stmt.setInt(2, cobranca.getCobrancaido());
+
+                stmt.executeUpdate();
+            } catch (Exception ex) {
+                System.out.println("Problemas ao alterar cobranca DAO inserir! Erro:" + ex.getMessage());
+                ex.printStackTrace();
+                return false;
+            }
+
             return true;
 
         } catch (Exception ex) {
