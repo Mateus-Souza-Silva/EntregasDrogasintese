@@ -78,6 +78,7 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "entrega.situacaoido,\n"
                 + "situacao.descricao as descricaosituacao,\n"
                 + "entrega.clienteido,\n"
+                + "entrega.datapagamento,\n"
                 + "(SELECT\n"
                 + "pessoa.nome\n"
                 + "from entrega e\n"
@@ -104,6 +105,7 @@ public class EntregaDAOImpl implements GenericDAO {
                 entrega.setValor(rs.getDouble("valor"));
                 entrega.setRecebedor(rs.getString("recebedor"));
                 entrega.setObservacao(rs.getString("observacao"));
+                entrega.setDatapagamento(rs.getDate("datapagamento"));
 
                 Pagamento pagamento = new Pagamento();
                 pagamento.setPagamentoido(rs.getInt("pagamentoido"));
@@ -161,7 +163,8 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "entrega.entregadorido,\n"
                 + "entrega.pagamentoido,\n"
                 + "entrega.situacaoido,\n"
-                + "entrega.clienteido\n"
+                + "entrega.clienteido,\n"
+                + "entrega.datapagamento\n"
                 + "FROM entrega\n"
                 + "where entrega.entregaido = ?\n"
                 + "order by entrega.dataentrega desc";
@@ -183,6 +186,7 @@ public class EntregaDAOImpl implements GenericDAO {
                 entrega.setSituacao(new Situacao(rs.getInt("situacaoido")));
                 entrega.setCliente(new Cliente(rs.getInt("clienteido")));
                 entrega.setEntregador(new Entregador(rs.getInt("entregadorido")));
+                entrega.setDatapagamento(rs.getDate("datapagamento"));
             }
         } catch (Exception ex) {
             System.out.println("Problemas ao carregar Entrega! Erro: " + ex.getMessage());
@@ -211,7 +215,8 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "entrega.pagamentoido = ?,\n"
                 + "entrega.situacaoido = ?,\n"
                 + "entrega.clienteido = ?,\n"
-                + "entrega.entregadorido = ?\n"
+                + "entrega.entregadorido = ?,\n"
+                + "entrega.datapagamento = ?\n"
                 + "where entrega.entregaido = ?;";
         try {
             stmt = conn.prepareCall(sql);
@@ -224,7 +229,13 @@ public class EntregaDAOImpl implements GenericDAO {
             stmt.setInt(7, entrega.getSituacao().getSituacaoido());
             stmt.setInt(8, entrega.getCliente().getClienteido());
             stmt.setInt(9, entrega.getEntregador().getEntregadorido());
-            stmt.setInt(10, entrega.getEntregaido());
+            
+            if (entrega.getDatapagamento() == null) {
+                stmt.setDate(10, null);
+            } else {
+                stmt.setDate(10, new java.sql.Date(entrega.getDatapagamento().getTime()));
+            }
+            stmt.setInt(11, entrega.getEntregaido());
             
             stmt.executeUpdate();
             return true;

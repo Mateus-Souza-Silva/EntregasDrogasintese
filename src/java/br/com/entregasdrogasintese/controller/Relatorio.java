@@ -115,7 +115,44 @@ public class Relatorio extends HttpServlet {
                     ex.printStackTrace();
                 }
             }
+        }else if (param == 3) {
+            ServletOutputStream servletOutputStream = response.getOutputStream();
 
+            String caminho = "/Layout/Relatorios/";
+            String relatorio = caminho + "RelatorioEntregasFinalizadas.jasper";
+
+            InputStream reportStream = getServletConfig().getServletContext().getResourceAsStream(relatorio);
+
+            Connection conn = null;
+
+            try {
+                conn = ConnectionFactory.getConnection();
+                System.out.println("Conexão do relatório com o banco de dados realizada com sucesso!");
+
+                //envia o relatório em formato PDF para o browser
+                response.setContentType("application/pdf");
+
+                //para gerar o relatório no formato PDF o método runReportToPdfStream foi usado
+                JasperRunManager.runReportToPdfStream(reportStream, servletOutputStream, new HashMap(), conn);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ChamarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ChamarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ChamarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                servletOutputStream.flush();
+                servletOutputStream.close();
+
+                try {
+                    ConnectionFactory.closeConnection(conn);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ChamarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    System.out.println("Problemas ao fechar parâmetros de conexão do relatório! Erro: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
         }
     }
 

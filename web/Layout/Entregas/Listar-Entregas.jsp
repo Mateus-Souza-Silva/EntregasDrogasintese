@@ -16,8 +16,7 @@
                             <th scope="col">Data Entrega</th>
                             <th scope="col">Produtos</th>
                             <th scope="col">Valor</th>
-                            <th scope="col">Recebedor</th>
-                            <th scope="col">Observação</th>
+                            <th scope="col">Data Pagamento</th>
                             <th scope="col">Pagamento</th>
                             <th scope="col">Situacao</th>
                             <th scope="col">Cliente</th>
@@ -32,8 +31,7 @@
                                 <td class="fundoEntrega${entrega.situacao.descricao}"><fmt:formatDate pattern="dd/MM/yyy" value="${entrega.dataentrega}"/></td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.produtos}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.valor}</td>
-                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.recebedor}</td>
-                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.observacao}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.datapagamento}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.pagamento.descricao}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao} corStatusEntrega${entrega.situacao.descricao}">${entrega.situacao.descricao}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.cliente.nome}</td>

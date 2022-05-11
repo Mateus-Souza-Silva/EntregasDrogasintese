@@ -14,7 +14,7 @@
                         </p>
                     </div>
                     <button type="button" class="btn btn-light botao-card">
-                        <a href="${pageContext.request.contextPath}\Relatorio?param=2" style="color: black">
+                        <a href="${pageContext.request.contextPath}\Relatorio?param=2" target="_blank" style="color: black">
                             <div>
                                 Ver Relatório
                             </div>
@@ -33,9 +33,11 @@
                         </p>
                     </div>
                     <button type="button" class="btn btn-light botao-card">
-                        <div>
-                            Ver Relatório
-                        </div>
+                        <a href="${pageContext.request.contextPath}\Relatorio?param=3" target="_blank" style="color: black">
+                            <div>
+                                Ver Relatório
+                            </div>
+                        </a>
                     </button>
                 </div>
             </div>

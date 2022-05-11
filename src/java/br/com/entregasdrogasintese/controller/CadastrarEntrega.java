@@ -35,6 +35,7 @@ public class CadastrarEntrega extends HttpServlet {
         entrega.setSituacao(new Situacao(Integer.parseInt(request.getParameter("situacaoido"))));
         entrega.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
         entrega.setValor(Double.parseDouble(request.getParameter("valor")));
+        entrega.setDatapagamento(Conversoes.converterData(request.getParameter("datapagamento")));
 
         try {
             GenericDAO dao = new EntregaDAOImpl();

@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="entregador" class="form-label">Entregador</label>
                     <select class="form-select" aria-label="Lista de entregadores" name="entregadorido">
                         <c:forEach var="entregador" items="${entregador}">
@@ -51,6 +51,10 @@
                     </select>
                 </div>
                 <div class="col-md-2">
+                    <label for="datapagamento" class="form-label text-decoration-none">Data Pagamento</label>
+                    <input type="date" name="datapagamento" class="form-control" value="${entrega.datapagamento}"/>
+                </div>
+                <div class="col-md-2">
                     <label for="situacao" class="form-label">Situação</label>
                     <select class="form-select" aria-label="Lista de Situação da entrega" name="situacaoido">
                         <c:forEach var="situacao" items="${situacao}">
@@ -58,7 +62,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <label for="cliente" class="form-label">Cliente</label>
                     <select class="form-select" aria-label="Lista de Clientes cadastrados" name="clienteido">
                         <c:forEach var="cliente" items="${cliente}">
