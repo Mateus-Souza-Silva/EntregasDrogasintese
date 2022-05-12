@@ -58,11 +58,15 @@ public class PessoaDAOImpl {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Pessoa pessoa = null;
-        String sql = "select pessoa.pessoaido, pessoa.nome, pessoa.nivel "
-                + "from pessoa left join farmaceutico on farmaceutico.pessoaido = pessoa.pessoaido "
-                + "LEFT join entregador on entregador.pessoaido = pessoa.nome "
-                + "where pessoa.nome like ?"
-                + "and farmaceutico.senha = ? or entregador.senha = ?";
+        String sql = "select\n"
+                + "	pessoa.pessoaido,\n"
+                + "	pessoa.nome,\n"
+                + "	pessoa.nivel\n"
+                + "from pessoa\n"
+                + "left join farmaceutico on farmaceutico.pessoaido = pessoa.pessoaido\n"
+                + "LEFT join entregador on entregador.pessoaido = pessoa.pessoaido\n"
+                + "where pessoa.nome = ?\n"
+                + "and (farmaceutico.senha = ? or entregador.senha = ?)";
         try {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, nome);
@@ -90,8 +94,6 @@ public class PessoaDAOImpl {
         }
         return pessoa;
     }
-
-
 
     public Integer listarUltimoID() {
         PreparedStatement stmt = null;
@@ -121,8 +123,8 @@ public class PessoaDAOImpl {
         }
         return pessoaIdo;
     }
-    
-    public Boolean alterar(Object object){
+
+    public Boolean alterar(Object object) {
         Pessoa pessoa = (Pessoa) object;
         PreparedStatement stmt = null;
         String sql = "update pessoa set\n"
@@ -130,16 +132,16 @@ public class PessoaDAOImpl {
                 + "pessoa.idade = ?,\n"
                 + "pessoa.datanascimento = ?\n"
                 + "where pessoa.pessoaido = ?";
-        
+
         try {
             stmt = conn.prepareStatement(sql);
-            
+
             stmt.setString(1, pessoa.getNome());
             stmt.setInt(2, pessoa.getIdade());
             stmt.setDate(3, new java.sql.Date(pessoa.getDatanascimento().getTime()));
-            
+
             stmt.setInt(4, pessoa.getPessoaido());
-            
+
             stmt.executeUpdate();
             return true;
         } catch (Exception ex) {

@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
         String mensagem = request.getParameter("acao");
         
         if (request.getParameter("acao").equals("logar")) {
-            String nome = request.getParameter("nome");
+            String nome = request.getParameter("nome").toUpperCase();
             String senha = request.getParameter("senha");
 
             if (!nome.equals("") && !senha.equals("")) {

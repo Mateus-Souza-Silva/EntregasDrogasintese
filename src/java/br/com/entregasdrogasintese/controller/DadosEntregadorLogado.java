@@ -1,5 +1,11 @@
 package br.com.entregasdrogasintese.controller;
 
+import br.com.entregasdrogasintese.dao.ClienteDAOImpl;
+import br.com.entregasdrogasintese.dao.EntregaDAOImpl;
+import br.com.entregasdrogasintese.dao.EntregadorDAOImpl;
+import br.com.entregasdrogasintese.dao.GenericDAO;
+import br.com.entregasdrogasintese.dao.PagamentoDAOImpl;
+import br.com.entregasdrogasintese.dao.SituacaoDAOImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +20,31 @@ public class DadosEntregadorLogado extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        request.getRequestDispatcher("Layout/Entregadores/Cadastrar-Entregadores.jsp").forward(request, response);
+        try {
+            GenericDAO dao = new EntregaDAOImpl();
+            request.setAttribute("entrega", dao.listar());
+            
+            //            listar cliente
+            GenericDAO daocliente = new ClienteDAOImpl();
+            request.setAttribute("cliente", daocliente.listar());
+            
+//            listar entregador
+            GenericDAO daoentregador = new EntregadorDAOImpl();
+            request.setAttribute("entregador", daoentregador.listar());
+            
+//            listar pagamento
+            GenericDAO daopagamento = new PagamentoDAOImpl();
+            request.setAttribute("pagamento", daopagamento.listar());
+            
+//            listar situacao
+            GenericDAO daosituacao = new SituacaoDAOImpl();
+            request.setAttribute("situacao", daosituacao.listar());
+            
+            request.getRequestDispatcher("Layout/PaginaEntregador/Entrega/Listar-Entregas.jsp").forward(request, response);
+        } catch (Exception ex) {
+            System.out.println("Problemas ao listar entregas! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        }
 
     }
 

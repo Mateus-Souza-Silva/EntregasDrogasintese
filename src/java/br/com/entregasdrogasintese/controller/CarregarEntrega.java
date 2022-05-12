@@ -26,13 +26,14 @@ public class CarregarEntrega extends HttpServlet {
         response.setContentType("text/html;charset=ISO-8859-1");
         try {
             int entregaido = Integer.parseInt(request.getParameter("entregaido"));
+            String nivel = request.getParameter("nivel");
 
             GenericDAO daoEntregador = new EntregadorDAOImpl();
             request.setAttribute("entregador", daoEntregador.listar());
 
             GenericDAO daoPagamento = new PagamentoDAOImpl();
             request.setAttribute("pagamento", daoPagamento.listar());
-            
+
             GenericDAO daoSituacao = new SituacaoDAOImpl();
             request.setAttribute("situacao", daoSituacao.listar());
 
@@ -42,7 +43,12 @@ public class CarregarEntrega extends HttpServlet {
             GenericDAO dao = new EntregaDAOImpl();
             request.setAttribute("entrega", dao.carregar(entregaido));
 
-            request.getRequestDispatcher("Layout/Entregas/Cadastrar-Entrega.jsp").forward(request, response);
+            if (nivel.equals("E")) {
+                request.getRequestDispatcher("Layout/PaginaEntregador/Entrega/Cadastrar-Entrega.jsp").forward(request, response);
+            } else if(nivel.equals("F")){
+                request.getRequestDispatcher("Layout/Entregas/Cadastrar-Entrega.jsp").forward(request, response);
+            }
+
         } catch (Exception ex) {
             System.out.println("Erro ao carregar EntregaCTR! Erro: " + ex.getMessage());
             ex.printStackTrace();

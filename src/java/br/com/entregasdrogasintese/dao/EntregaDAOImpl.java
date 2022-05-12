@@ -84,7 +84,11 @@ public class EntregaDAOImpl implements GenericDAO {
                 + "from entrega e\n"
                 + "inner join cliente on cliente.clienteido = e.clienteido\n"
                 + "INNER join pessoa on pessoa.pessoaido = cliente.pessoaido\n"
-                + "where entrega.entregaido = e.entregaido) as clientenome\n"
+                + "where entrega.entregaido = e.entregaido) as clientenome,\n"
+                + "(SELECT\n"
+                + "concat(cliente.logradouro,', Nº:',cliente.numero, ', ', cliente.bairro)\n"
+                + "from cliente c\n"
+                + "where c.clienteido = cliente.clienteido) as logradouro\n"
                 + "FROM entrega\n"
                 + "inner join entregador on entregador.entregadorido = entrega.entregadorido\n"
                 + "left join pagamento on pagamento.pagamentoido = entrega.pagamentoido\n"
@@ -118,6 +122,7 @@ public class EntregaDAOImpl implements GenericDAO {
                 Cliente cliente = new Cliente();
                 cliente.setClienteido(rs.getInt("clienteido"));
                 cliente.setNome(rs.getString("clientenome"));
+                cliente.setLogradouro(rs.getString("logradouro"));
 
                 Entregador entregador = new Entregador();
                 entregador.setEntregadorido(rs.getInt("entregadorido"));
@@ -229,18 +234,17 @@ public class EntregaDAOImpl implements GenericDAO {
             stmt.setInt(7, entrega.getSituacao().getSituacaoido());
             stmt.setInt(8, entrega.getCliente().getClienteido());
             stmt.setInt(9, entrega.getEntregador().getEntregadorido());
-            
+
             if (entrega.getDatapagamento() == null) {
                 stmt.setDate(10, null);
             } else {
                 stmt.setDate(10, new java.sql.Date(entrega.getDatapagamento().getTime()));
             }
             stmt.setInt(11, entrega.getEntregaido());
-            
+
             stmt.executeUpdate();
             return true;
-            
-            
+
         } catch (Exception ex) {
             System.out.println("Problemas ao alterar Entrega DAO! Erro:" + ex.getMessage());
             ex.printStackTrace();

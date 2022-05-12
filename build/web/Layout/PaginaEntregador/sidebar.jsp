@@ -26,116 +26,6 @@
         <script src="${pageContext.request.contextPath}\css\sidebar.js"></script>
     </head>
 
-    <script>
-        function calculaIdade() {
-            var datanascimento = document.getElementById("datanascimento").value;
-
-            var dataNasc = datanascimento;
-            var dataAtual = new Date();
-
-            var anoAtual = dataAtual.getFullYear();
-
-            var anoNascParts = dataNasc.split('-');
-            var anoNasc = anoNascParts[0];
-            var mesNasc = anoNascParts[1];
-            var diaNasc = anoNascParts[2];
-
-            var idade = anoAtual - anoNasc;
-
-            var mesAtual = dataAtual.getMonth() + 1;
-
-            //Se mes atual for menor que o nascimento, nao fez aniversario ainda;  
-
-            if (mesAtual < mesNasc) {
-
-                idade--;
-
-            } else {
-
-                //Se estiver no mes do nascimento, verificar o dia
-
-                if (mesAtual == mesNasc) {
-
-                    if (new Date().getDate() < diaNasc) {
-
-                        //Se a data atual for menor que o dia de nascimento ele ainda nao fez aniversario
-
-                        idade--;
-
-                    }
-
-                }
-
-            }
-
-            document.getElementById('idade').value = idade;
-
-            // return idade;
-            console.log(idade);
-        }
-
-        function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua').value = ("");
-            document.getElementById('bairro').value = ("");
-        }
-
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value = (conteudo.logradouro);
-                document.getElementById('bairro').value = (conteudo.bairro);
-            } //end if.
-            else {
-                //CEP não Encontrado.
-                limpa_formulário_cep();
-                alert("CEP não encontrado.");
-            }
-        }
-
-        function pesquisacep(valor) {
-
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-
-                //Valida o formato do CEP.
-                if (validacep.test(cep)) {
-
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value = "...";
-                    document.getElementById('bairro').value = "...";
-
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-
-                    //Sincroniza com o callback.
-                    script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
-
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
-
-                } //end if.
-                else {
-                    //cep é inválido.
-                    limpa_formulário_cep();
-                    alert("Formato de CEP inválido.");
-                }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
-            }
-        }
-        ;
-
-    </script>
-
     <body>
 
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -202,7 +92,7 @@
             <!-- Sidebar-->
             <div class="border-end bg-dark text-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom text-white bg-dark">
-                    <a class="text-white bg-dark" href="${pageContext.request.contextPath}\DadosFarmaceuticoLogado">
+                    <a class="text-white bg-dark" href="${pageContext.request.contextPath}\DadosEntregadorLogado">
                         <svg class="bi me-2" width="0" height="0"><img height="30" src="${pageContext.request.contextPath}\Imagens\logo-Drogasintese.png"/></svg>
                         <span class="fs-4">DrogaSintese</span>
                     </a>
@@ -219,59 +109,7 @@
                             </h2>
                             <div id="flush-collapseSix" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\DadosEntrega">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#cadastrar"/></svg>
-                                        Cadastrar
-                                    </a>
-                                </div>
-                                <div class="accordion-body">
                                     <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntrega">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
-                                        Listar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item bg-dark text-white">
-                            <h2 class="accordion-header text-white" id="flush-headingFive">
-                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#entregador"/></svg>
-                                    Entregadores
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFive" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\Layout\Entregadores\Cadastrar-Entregadores.jsp">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#cadastrar"/></svg>
-                                        Cadastrar
-                                    </a>
-                                </div>
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntregador">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
-                                        Listar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item bg-dark text-white">
-                            <h2 class="accordion-header text-white" id="flush-headingFour">
-                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#cliente"/></svg>
-                                    Clientes
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFour" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCidade">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#cadastrar"/></svg>
-                                        Cadastrar
-                                    </a>
-                                </div>
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCliente">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
                                         Listar
                                     </a>
@@ -288,12 +126,6 @@
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\DadosCobranca">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#cadastrar"/></svg>
-                                        Cadastrar
-                                    </a>
-                                </div>
-                                <div class="accordion-body">
                                     <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCobranca">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
                                         Listar
@@ -303,21 +135,15 @@
                         </div>
 
                         <div class="accordion-item bg-dark text-white">
-                            <h2 class="accordion-header text-white" id="flush-headingThree">
-                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                                    Farmacêuticos
+                            <h2 class="accordion-header text-white" id="flush-headingFour">
+                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#cliente"/></svg>
+                                    Clientes
                                 </button>
                             </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseFour" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\Layout\Farmaceuticos\Cadastrar-Farmaceuticos.jsp">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#cadastrar"/></svg>
-                                        Cadastrar
-                                    </a>
-                                </div>
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarFarmaceutico">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCliente">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
                                         Listar
                                     </a>

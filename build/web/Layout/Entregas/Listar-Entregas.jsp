@@ -37,7 +37,7 @@
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.cliente.nome}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.entregador.nome}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">
-                                    <a type="button" href="CarregarEntrega?entregaido=${entrega.entregaido}" class="btn btn-dark">
+                                    <a type="button" href="${pageContext.request.contextPath}/CarregarEntrega?entregaido=${entrega.entregaido}&nivel=F" class="btn btn-dark">
                                         <svg class="bi" width="16" height="16"><use xlink:href="#alterar"/></svg>
                                     </a>
                                 </td>

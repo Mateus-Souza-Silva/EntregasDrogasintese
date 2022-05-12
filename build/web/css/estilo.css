@@ -1,3 +1,9 @@
+select[readonly] {
+  background: #eee; /*Simular campo inativo - Sugestão @GabrielRodrigues*/
+  pointer-events: none;
+  touch-action: none;
+}
+
 .title-h1{
     font-family: Corbel;
     padding: 30px;

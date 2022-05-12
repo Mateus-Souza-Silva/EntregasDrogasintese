@@ -333,7 +333,7 @@
                                 </button>
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body"><a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\Relatorio?param=1">
+                                <div class="accordion-body"><a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\Relatorio?param=4">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
                                         Relatório de Entregas
                                     </a></div>

@@ -54,6 +54,7 @@ public class CadastrarEntrega extends HttpServlet {
                     mensagem = "Problemas ao alterar entrega!";
                 }
             }
+                    
             request.setAttribute("mensagem", mensagem);
             request.getRequestDispatcher("DadosEntrega").forward(request, response);
         } catch (Exception ex) {

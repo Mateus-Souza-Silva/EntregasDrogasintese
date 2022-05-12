@@ -21,7 +21,7 @@ public class DadosEntrega extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         try {
-            //            listar cliente
+//            listar cliente
             GenericDAO daocliente = new ClienteDAOImpl();
             request.setAttribute("cliente", daocliente.listar());
             
