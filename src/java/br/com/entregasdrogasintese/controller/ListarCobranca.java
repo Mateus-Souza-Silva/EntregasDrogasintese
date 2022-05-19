@@ -20,9 +20,13 @@ public class ListarCobranca extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
+        
+        Integer pagina = Integer.parseInt(request.getParameter("pagina"));
+        
         try {
-            GenericDAO dao = new CobrancaDAOImpl();
-            request.setAttribute("cobranca", dao.listar());
+            CobrancaDAOImpl dao = new CobrancaDAOImpl();
+            request.setAttribute("cobrancas", dao.listar(pagina));
+            request.setAttribute("pagina", pagina);
             request.getRequestDispatcher("Layout/Cobranca/Listar-Cobranca.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Problemas ao Listar Cobranca Controller! Erro: " + ex.getMessage());

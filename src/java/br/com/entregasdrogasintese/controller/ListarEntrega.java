@@ -16,9 +16,13 @@ public class ListarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
+        
+        Integer pagina = Integer.parseInt(request.getParameter("pagina"));
+        
         try {
-            GenericDAO dao = new EntregaDAOImpl();
-            request.setAttribute("entrega", dao.listar());
+            EntregaDAOImpl dao = new EntregaDAOImpl();
+            request.setAttribute("entregas", dao.listar(pagina));
+            request.setAttribute("pagina", pagina);
             request.getRequestDispatcher("Layout/Entregas/Listar-Entregas.jsp").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Problemas ao listar entregas! Erro: " + ex.getMessage());

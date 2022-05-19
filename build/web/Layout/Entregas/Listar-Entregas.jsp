@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="br.com.entregasdrogasintese.model.Entrega"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../sidebar.jsp"/>
@@ -25,13 +27,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${entrega}" var="entrega">
+
+                        <%
+                            List<Entrega> entregas = (List<Entrega>) request.getAttribute("entregas");
+                            Entrega entrega = entregas.get(0);
+                            int tamanho = entrega.getTotalRegistros();
+                            System.out.println("T: " + tamanho);
+                        %>
+
+                        <c:forEach items="${entregas}" var="entrega">
                             <tr>
                                 <th class="fundoEntrega${entrega.situacao.descricao}" scope="row">${entrega.entregaido}</th>
                                 <td class="fundoEntrega${entrega.situacao.descricao}"><fmt:formatDate pattern="dd/MM/yyy" value="${entrega.dataentrega}"/></td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.produtos}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.valor}</td>
-                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.datapagamento}</td>
+                                <td class="fundoEntrega${entrega.situacao.descricao}"><fmt:formatDate pattern="dd/MM/yyy" value="${entrega.datapagamento}"/></td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.pagamento.descricao}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao} corStatusEntrega${entrega.situacao.descricao}">${entrega.situacao.descricao}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.cliente.nome}</td>
@@ -41,23 +51,42 @@
                                         <svg class="bi" width="16" height="16"><use xlink:href="#alterar"/></svg>
                                     </a>
                                 </td>
-                            </tr>
+                            </tr>                            
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
+            <%
+                int ultimaPagina = 0;
+                int pagina = (Integer) request.getAttribute("pagina");
+                int pagina2 = pagina;
+                if (pagina == 1) {
+                    pagina = pagina + 1;
+                }
+            %>
             <nav aria-label="...">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <span class="page-link">Voltar</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <span class="page-link">2</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#">Próximo</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarEntrega?pagina=<%= pagina - 1%>">Voltar</a>
+                    </li>
+                    <%
+                        int paginas = tamanho / 10;
+                        for (int i = 0; i <= paginas; i++) {
+                    %>                    
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarEntrega?pagina=<%= i + 1%>"><%= i + 1%></a>
+                    </li>
+                    <% ultimaPagina++;
+                        } %>                    
+                    <%
+                        if (pagina == ultimaPagina) {
+                            System.out.println("entrou");
+                            pagina = pagina - 1;
+                            pagina2 = pagina2 - 1;
+                        }
+                    %>
+                    <li class="page-item">
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarEntrega?pagina=<%= pagina2 + 1%>">Próximo</a>
                     </li>
                 </ul>
             </nav>

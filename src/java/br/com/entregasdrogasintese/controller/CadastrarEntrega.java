@@ -33,7 +33,12 @@ public class CadastrarEntrega extends HttpServlet {
         entrega.setProdutos(request.getParameter("produtos").toUpperCase());
         entrega.setRecebedor(request.getParameter("recebedor").toUpperCase());
         entrega.setSituacao(new Situacao(Integer.parseInt(request.getParameter("situacaoido"))));
-        entrega.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
+
+        if (request.getParameter("pagamentoido").equals("")) {
+            entrega.setPagamento(null);
+        } else {
+            entrega.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
+        }
         entrega.setValor(Double.parseDouble(request.getParameter("valor")));
         entrega.setDatapagamento(Conversoes.converterData(request.getParameter("datapagamento")));
 
@@ -46,6 +51,8 @@ public class CadastrarEntrega extends HttpServlet {
                 } else {
                     mensagem = "Problemas ao cadastrar entrega Controller";
                 }
+                request.setAttribute("mensagem", mensagem);
+                request.getRequestDispatcher("DadosEntrega").forward(request, response);
             } else if (!request.getParameter("entregaido").equals("")) {
                 entrega.setEntregaido(Integer.parseInt(request.getParameter("entregaido")));
                 if (dao.alterar(entrega)) {
@@ -53,10 +60,8 @@ public class CadastrarEntrega extends HttpServlet {
                 } else {
                     mensagem = "Problemas ao alterar entrega!";
                 }
+                request.getRequestDispatcher("ListarEntrega?pagina=1").forward(request, response);
             }
-                    
-            request.setAttribute("mensagem", mensagem);
-            request.getRequestDispatcher("DadosEntrega").forward(request, response);
         } catch (Exception ex) {
             System.out.println("Problemas ao cadastrar entrega! Erro: " + ex.getMessage());
             ex.printStackTrace();

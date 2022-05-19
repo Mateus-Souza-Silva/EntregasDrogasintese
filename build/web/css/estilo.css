@@ -78,21 +78,27 @@ select[readonly] {
 .fundoABERTO{
     background-color: #ffebeb !important;
 }
-.fundoFINALIZADA{
+.fundoFINALIZADO{
     background-color: #e3ffe0 !important;
 }
 .fundoVOLTOU{
     background-color: #e4f0ff !important;
 }
+.fundoCANCELADO{
+    background-color: #efefef !important;
+}
 
 .fundoEntregaABERTO{
     background-color: #e3ffe0 !important;
 }
-.fundoEntregaFINALIZADA{
+.fundoEntregaFINALIZADO{
     background-color: #ffebeb !important;
 }
 .fundoEntregaVOLTOU{
     background-color: #e4f0ff !important;
+}
+.fundoEntregaCANCELADO{
+    background-color: #efefef !important;
 }
 
 .corStatusABERTO{
@@ -100,7 +106,7 @@ select[readonly] {
     font-weight: bold !important;
 }
 
-.corStatusFINALIZADA{
+.corStatusFINALIZADO{
     color: #0f9700 !important;
     font-weight: bold !important;
 }
@@ -109,17 +115,23 @@ select[readonly] {
     color: #130bff !important;
     font-weight: bold !important;
 }
+.corStatusCANCELADO{
+    color: #000000 !important;
+    font-weight: bold !important;
+}
 
 .corStatusEntregaABERTO{
     color: #0f9700 !important;
     font-weight: bold !important;
 }
-
-.corStatusEntregaFINALIZADA{
+.corStatusEntregaFINALIZADO{
     color: #ff1b1b !important;
     font-weight: bold !important;
 }
-
+.corStatusEntregaCANCELADO{
+    color: #000000 !important;
+    font-weight: bold !important;
+}
 .corStatusEntregaVOLTOU{
     color: #130bff !important;
     font-weight: bold !important;

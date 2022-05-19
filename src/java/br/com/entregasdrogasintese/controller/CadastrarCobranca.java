@@ -32,10 +32,22 @@ public class CadastrarCobranca extends HttpServlet {
         cobranca.setDatapagamento(Conversoes.converterData(request.getParameter("datapagamento")));
         cobranca.setNfcobranca(request.getParameter("nfcobranca").toUpperCase());
         cobranca.setObservacao(request.getParameter("observacao").toUpperCase());
-        cobranca.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
+
+        if (request.getParameter("pagamentoido").equals("")) {
+            cobranca.setPagamento(null);
+        } else {
+            cobranca.setPagamento(new Pagamento(Integer.parseInt(request.getParameter("pagamentoido"))));
+        }
+
         cobranca.setSetor(new Setor(Integer.parseInt(request.getParameter("setorido"))));
         cobranca.setSituacao(new Situacao(Integer.parseInt(request.getParameter("situacaoido"))));
-        cobranca.setTipopagamento(new TipoPagamento(Integer.parseInt(request.getParameter("tipopagamentoido"))));
+
+        if (request.getParameter("tipopagamentoido").equals("")) {
+            cobranca.setTipopagamento(null);
+        } else {
+            cobranca.setTipopagamento(new TipoPagamento(Integer.parseInt(request.getParameter("tipopagamentoido"))));
+        }
+
         cobranca.setValor(Double.parseDouble(request.getParameter("valor")));
         cobranca.setVencimento(Conversoes.converterData(request.getParameter("vencimento")));
 
@@ -57,7 +69,7 @@ public class CadastrarCobranca extends HttpServlet {
                 } else {
                     mensagem = "Problemas ao alterar cobranca!";
                 }
-                request.getRequestDispatcher("ListarCobranca").forward(request, response);
+                request.getRequestDispatcher("ListarCobranca?pagina=1").forward(request, response);
             }
 
         } catch (Exception ex) {

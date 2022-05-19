@@ -148,6 +148,124 @@ public class EntregaDAOImpl implements GenericDAO {
         return resultado;
     }
 
+    public List<Object> listar(int pagina) {
+        int limite = 10;
+        Integer totalRegistros = null;
+        List<Object> resultado = new ArrayList<>();
+        resultado.clear();
+        System.out.println("Qtde Inicia: " + resultado.size());
+        PreparedStatement stmt = null;
+        PreparedStatement stmt2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+
+        String sql = "SELECT COUNT(*) AS total FROM entrega;";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                totalRegistros = rs.getInt("total");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao contabilizar total de entregas! ErrO: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        int valorLimite = (pagina * limite);//20
+        int valorInicial = (pagina * limite) - limite;//11
+
+        String sql2 = "SELECT\n"
+                + "entrega.entregaido,\n"
+                + "entrega.dataentrega,\n"
+                + "entrega.produtos,\n"
+                + "entrega.valor,\n"
+                + "entrega.recebedor,\n"
+                + "entrega.observacao,\n"
+                + "entrega.entregadorido,\n"
+                + "pessoa.nome as entregador,\n"
+                + "coalesce(entrega.pagamentoido,'') pagamentoido,\n"
+                + "coalesce(pagamento.descricao,'') as descricaopagamento,\n"
+                + "entrega.situacaoido,\n"
+                + "situacao.descricao as descricaosituacao,\n"
+                + "entrega.clienteido,\n"
+                + "entrega.datapagamento,\n"
+                + "(SELECT\n"
+                + "pessoa.nome\n"
+                + "from entrega e\n"
+                + "inner join cliente on cliente.clienteido = e.clienteido\n"
+                + "INNER join pessoa on pessoa.pessoaido = cliente.pessoaido\n"
+                + "where entrega.entregaido = e.entregaido) as clientenome,\n"
+                + "(SELECT\n"
+                + "concat(cliente.logradouro,', Nº:',cliente.numero, ', ', cliente.bairro)\n"
+                + "from cliente c\n"
+                + "where c.clienteido = cliente.clienteido) as logradouro\n"
+                + "FROM entrega\n"
+                + "inner join entregador on entregador.entregadorido = entrega.entregadorido\n"
+                + "left join pagamento on pagamento.pagamentoido = entrega.pagamentoido\n"
+                + "inner join situacao on situacao.situacaoido = entrega.situacaoido\n"
+                + "inner join cliente on cliente.clienteido = entrega.clienteido\n"
+                + "inner join pessoa on pessoa.pessoaido = entregador.pessoaido\n"
+                + "order by entrega.entregaido\n"
+                + "LIMIT ?, ?;";
+
+        try {
+            stmt2 = conn.prepareStatement(sql2);
+            stmt2.setInt(1, valorInicial);
+            stmt2.setInt(2, 10);
+            rs2 = stmt2.executeQuery();
+
+            while (rs2.next()) {
+                Entrega entrega = new Entrega();
+                entrega.setEntregaido(rs2.getInt("entregaido"));
+                entrega.setDataentrega(rs2.getDate("dataentrega"));
+                entrega.setProdutos(rs2.getString("produtos"));
+                entrega.setValor(rs2.getDouble("valor"));
+                entrega.setRecebedor(rs2.getString("recebedor"));
+                entrega.setObservacao(rs2.getString("observacao"));
+                entrega.setDatapagamento(rs2.getDate("datapagamento"));
+
+                Pagamento pagamento = new Pagamento();
+                pagamento.setPagamentoido(rs2.getInt("pagamentoido"));
+                pagamento.setDescricao(rs2.getString("descricaopagamento"));
+
+                Situacao situacao = new Situacao();
+                situacao.setSituacaoido(rs2.getInt("situacaoido"));
+                situacao.setDescricao(rs2.getString("descricaosituacao"));
+
+                Cliente cliente = new Cliente();
+                cliente.setClienteido(rs2.getInt("clienteido"));
+                cliente.setNome(rs2.getString("clientenome"));
+                cliente.setLogradouro(rs2.getString("logradouro"));
+
+                Entregador entregador = new Entregador();
+                entregador.setEntregadorido(rs2.getInt("entregadorido"));
+                entregador.setNome(rs2.getString("entregador"));
+
+                entrega.setCliente(cliente);
+                entrega.setEntregador(entregador);
+                entrega.setPagamento(pagamento);
+                entrega.setSituacao(situacao);
+                entrega.setTotalRegistros(totalRegistros);
+
+                resultado.add(entrega);
+                System.out.println("Qtde: " + resultado.size() + " " + valorInicial + " " + valorLimite);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar Entrega! Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                ConnectionFactory.closeConnection(conn, stmt, rs);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar os parâmetros de conexão! Erro: " + ex.getMessage());
+            }
+        }
+        return resultado;
+    }
+
     @Override
     public void excluir(int idObject) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -230,7 +348,13 @@ public class EntregaDAOImpl implements GenericDAO {
             stmt.setDouble(3, entrega.getValor());
             stmt.setString(4, entrega.getRecebedor());
             stmt.setString(5, entrega.getObservacao());
-            stmt.setInt(6, entrega.getPagamento().getPagamentoido());
+
+            if (entrega.getPagamento() == null) {
+                stmt.setNull(6, 0);
+            } else {
+                stmt.setInt(6, entrega.getPagamento().getPagamentoido());
+            }
+
             stmt.setInt(7, entrega.getSituacao().getSituacaoido());
             stmt.setInt(8, entrega.getCliente().getClienteido());
             stmt.setInt(9, entrega.getEntregador().getEntregadorido());

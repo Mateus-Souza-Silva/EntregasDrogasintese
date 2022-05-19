@@ -17,6 +17,7 @@ public class Cobranca {
     private Date datapagamento;
     private TipoPagamento tipopagamento;
     private Integer qtdCobranca;
+    private Integer totalRegistros;
 
     public Cobranca() {
     }
@@ -218,5 +219,19 @@ public class Cobranca {
     public void setQtdCobranca(Integer QtdCobranca) {
         this.qtdCobranca = QtdCobranca;
     }
+    
+    /**
+     * @return the totalRegistros
+     */
+    public Integer getTotalRegistros() {
+        return totalRegistros;
+    }
+
+    /**
+     * @param totalRegistros the totalRegistros to set
+     */
+    public void setTotalRegistros(Integer totalRegistros) {
+        this.totalRegistros = totalRegistros;
+    }     
     
 }

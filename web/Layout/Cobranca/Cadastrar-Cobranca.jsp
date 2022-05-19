@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-2">
                     <label for="vencimento" class="form-label">Data Vencimento</label>
-                    <input type="date" name="vencimento" id="vencimento" value="${cobranca.vencimento}" class="form-control"/>                        
+                    <input type="date" name="vencimento" id="vencimento" required="" value="${cobranca.vencimento}" class="form-control"/>                        
                 </div>
                 <div class="col-md-5">
                     <label for="cliente" class="form-label">Cliente</label>
@@ -49,6 +49,7 @@
                 <div class="col-md-2">
                     <label for="pagamento" class="form-label">Pagamento</label>
                     <select class="form-select" aria-label="Lista de Pagamento" name="pagamentoido">
+                        <option value="">SELECIONAR</option>
                         <c:forEach var="pagamento" items="${pagamento}">
                             <option value="${pagamento.pagamentoido}" ${pagamento.pagamentoido==cobranca.pagamento.pagamentoido?'selected':''}>${pagamento.descricao}</option>
                         </c:forEach>                   
@@ -65,6 +66,7 @@
                 <div class="col-md-2">
                     <label for="tipopagamento" class="form-label">Tipo Pagamento</label>
                     <select class="form-select" aria-label="Lista de Tipo Pagamento" name="tipopagamentoido">
+                        <option value="">SELECIONAR</option>
                         <c:forEach var="tipopagamento" items="${tipopagamento}">
                             <option value="${tipopagamento.tipopagamentoido}" ${tipopagamento.tipopagamentoido==cobranca.tipopagamento.tipopagamentoido?'selected':''}>${tipopagamento.descricao}</option>
                         </c:forEach>                   

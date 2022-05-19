@@ -16,6 +16,7 @@ public class Entrega {
     private Integer qtdCadastrada;
     private Integer qtdFinalizada;
     private Date datapagamento;
+    private Integer totalRegistros;
 
     public Entrega() {
     }
@@ -217,6 +218,19 @@ public class Entrega {
     public void setDatapagamento(Date datapagamento) {
         this.datapagamento = datapagamento;
     }
-    
+
+    /**
+     * @return the totalRegistros
+     */
+    public Integer getTotalRegistros() {
+        return totalRegistros;
+    }
+
+    /**
+     * @param totalRegistros the totalRegistros to set
+     */
+    public void setTotalRegistros(Integer totalRegistros) {
+        this.totalRegistros = totalRegistros;
+    }        
     
 }

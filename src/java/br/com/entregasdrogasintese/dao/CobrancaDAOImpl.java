@@ -10,7 +10,7 @@ import br.com.entregasdrogasintese.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,6 +149,123 @@ public class CobrancaDAOImpl implements GenericDAO {
         return resultado;
     }
 
+    public List<Object> listar(int pagina) {
+        int limite = 10;
+        Integer totalRegistros=null;
+        List<Object> resultado = new ArrayList<>();
+        resultado.clear();
+        System.out.println("Qtde Inicia: " + resultado.size());
+        PreparedStatement stmt = null;
+        PreparedStatement stmt2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+
+        String sql = "SELECT COUNT(*) AS total FROM cobranca;";
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                totalRegistros = rs.getInt("total");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao contabilizar total de entregas! ErrO: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        int valorLimite = (pagina * limite);//20
+        int valorInicial = (pagina * limite) - limite;//11
+
+        String sql2 = "SELECT\n"
+                + "	cobranca.cobrancaido,\n"
+                + "	cobranca.datacobranca,\n"
+                + "	coalesce(cobranca.nfcobranca,'') AS nfcobranca,\n"
+                + "	if(COALESCE(cobranca.valor - SUM(pagamento_parcela.valor_pagamento_parcela),0)>0,COALESCE(cobranca.valor - SUM(pagamento_parcela.valor_pagamento_parcela),0),cobranca.valor) AS valor,\n"
+                + "	coalesce(cobranca.vencimento,'') AS vencimento,\n"
+                + "	COALESCE(cobranca.observacao,'') AS observacao,\n"
+                + "	cobranca.datapagamento AS datapagamento,\n"
+                + "	cobranca.clienteido,\n"
+                + "	pessoa.nome as nomecliente,\n"
+                + "	cobranca.setorido,\n"
+                + "	setor.descricao as descricaosetor,\n"
+                + "	cobranca.situacaoido,\n"
+                + "	situacao.descricao as descricaosituacao,\n"
+                + "	coalesce(cobranca.tipopagamentoido,'') AS tipopagamentoido,\n"
+                + "	coalesce(tipopagamento.descricao,'') AS descricaotipopagamento,\n"
+                + "	coalesce(cobranca.pagamentoido,'') AS pagamentoido,\n"
+                + "	coalesce(pagamento.descricao,'') AS descricaopagamento\n"
+                + "	FROM cobranca\n"
+                + "	INNER JOIN cliente ON cliente.clienteido = cobranca.clienteido\n"
+                + "	INNER JOIN pessoa ON pessoa.pessoaido = cliente.pessoaido\n"
+                + "	INNER JOIN setor ON setor.setorido = cobranca.setorido\n"
+                + "	INNER JOIN situacao ON situacao.situacaoido = cobranca.situacaoido\n"
+                + "	left JOIN tipopagamento ON tipopagamento.tipopagamentoido = cobranca.tipopagamentoido\n"
+                + "	LEFT JOIN pagamento ON pagamento.pagamentoido = cobranca.pagamentoido\n"
+                + "	LEFT JOIN pagamento_parcela ON (cobranca.cobrancaido = pagamento_parcela.cobrancaido)	\n"
+                + "	GROUP BY 1\n"
+                + "	ORDER BY cobrancaido desc\n"
+                + "     LIMIT ?, ?;";
+        try {
+            stmt2 = conn.prepareStatement(sql2);
+            stmt2.setInt(1, valorInicial);
+            stmt2.setInt(2, 10);
+            rs2 = stmt2.executeQuery();
+            
+            while (rs2.next()) {
+                Cobranca cobranca = new Cobranca();
+                cobranca.setCobrancaido(rs2.getInt("cobrancaido"));
+                cobranca.setDatacobranca(rs2.getDate("datacobranca"));
+                cobranca.setNfcobranca(rs2.getString("nfcobranca"));
+                cobranca.setValor(rs2.getDouble("valor"));
+                cobranca.setVencimento(rs2.getDate("vencimento"));
+                cobranca.setObservacao(rs2.getString("observacao"));
+                cobranca.setDatapagamento(rs2.getDate("datapagamento"));
+
+                Cliente cliente = new Cliente();
+                cliente.setClienteido(rs2.getInt("clienteido"));
+                cliente.setNome(rs2.getString("nomecliente"));
+
+                Pagamento pagamento = new Pagamento();
+                pagamento.setPagamentoido(rs2.getInt("pagamentoido"));
+                pagamento.setDescricao(rs2.getString("descricaopagamento"));
+
+                Setor setor = new Setor();
+                setor.setSetorido(rs2.getInt("setorido"));
+                setor.setDescricao(rs2.getString("descricaosetor"));
+
+                TipoPagamento tipopagamento = new TipoPagamento();
+                tipopagamento.setTipopagamentoido(rs2.getInt("tipopagamentoido"));
+                tipopagamento.setDescricao(rs2.getString("descricaotipopagamento"));
+
+                Situacao situacao = new Situacao();
+                situacao.setSituacaoido(rs2.getInt("situacaoido"));
+                situacao.setDescricao(rs2.getString("descricaosituacao"));
+
+                cobranca.setCliente(cliente);
+                cobranca.setPagamento(pagamento);
+                cobranca.setSetor(setor);
+                cobranca.setTipopagamento(tipopagamento);
+                cobranca.setSituacao(situacao);
+                cobranca.setTotalRegistros(totalRegistros);
+
+                resultado.add(cobranca);
+                System.out.println("Qtde: " + resultado.size() + " " + valorInicial + " " + valorLimite);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Problemas ao listar Cobranca! Dao Erro: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                ConnectionFactory.closeConnection(conn, stmt, rs);
+            } catch (Exception ex) {
+                System.out.println("Problemas ao fechar os parâmetros de conexão! Erro: " + ex.getMessage());
+            }
+        }
+        return resultado;
+    }
+
     @Override
     public void excluir(int idObject) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -248,7 +365,13 @@ public class CobrancaDAOImpl implements GenericDAO {
             stmt.setDate(4, new java.sql.Date(cobranca.getVencimento().getTime()));
             stmt.setInt(5, cobranca.getSetor().getSetorido());
             stmt.setString(6, cobranca.getObservacao());
-            stmt.setInt(7, cobranca.getPagamento().getPagamentoido());
+
+            if (cobranca.getPagamento() == null) {
+                stmt.setNull(7, 0);
+            } else {
+                stmt.setInt(7, cobranca.getPagamento().getPagamentoido());
+            }
+
             stmt.setInt(8, cobranca.getSituacao().getSituacaoido());
 
 //            System.out.println("Data: " + cobranca.getDatapagamento());
@@ -258,7 +381,12 @@ public class CobrancaDAOImpl implements GenericDAO {
                 stmt.setDate(9, new java.sql.Date(cobranca.getDatapagamento().getTime()));
             }
 
-            stmt.setInt(10, cobranca.getTipopagamento().getTipopagamentoido());
+            if (cobranca.getTipopagamento() == null) {
+                stmt.setNull(10, 0);
+            } else {
+                stmt.setInt(10, cobranca.getTipopagamento().getTipopagamentoido());
+            }
+
             stmt.setInt(11, cobranca.getCobrancaido());
 
             stmt.executeUpdate();

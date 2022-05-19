@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/sidebar.jsp</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Entregas/Listar-Entregas.jsp</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Clientes/Listar-Clientes.jsp</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/dao/CobrancaDAOImpl.java</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Entregas/Cadastrar-Entrega.jsp</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/controller/CadastrarEntrega.java</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/dao/EntregaDAOImpl.java</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/css/estilo.css</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Cobranca/Cadastrar-Cobranca.jsp</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/web/Layout/Cobranca/Listar-Cobranca.jsp</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/controller/CadastrarCobranca.java</file>
+            <file>file:/C:/Users/mateu/OneDrive/Documentos/NetBeansProjects/EntregasDrogasintese/src/java/br/com/entregasdrogasintese/controller/ListarEntrega.java</file>
+        </group>
     </open-files>
 </project-private>

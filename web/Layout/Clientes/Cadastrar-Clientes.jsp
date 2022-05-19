@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-2">
                     <label for="datanascimento" class="form-label">Data Nascimento</label>
-                    <input type="date" name="datanascimento" id="datanascimento" value="${cliente.datanascimento}" onblur="calculaIdade()" class="form-control"/>                        
+                    <input type="date" name="datanascimento" id="datanascimento" value="${cliente.datanascimento}" onblur="calculaIdade()" required="" class="form-control"/>                        
                 </div>
                 <div class="col-md-1">
                     <label for="idade" class="form-label">Idade</label>
