@@ -20,14 +20,26 @@ public class ListarCobranca extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
-        
+
         Integer pagina = Integer.parseInt(request.getParameter("pagina"));
-        
+
         try {
-            CobrancaDAOImpl dao = new CobrancaDAOImpl();
-            request.setAttribute("cobrancas", dao.listar(pagina));
-            request.setAttribute("pagina", pagina);
-            request.getRequestDispatcher("Layout/Cobranca/Listar-Cobranca.jsp").forward(request, response);
+            String nivel = request.getParameter("nivel");
+
+            if (nivel.equals("E")) {
+
+                CobrancaDAOImpl daocob = new CobrancaDAOImpl();
+                request.setAttribute("cobrancas", daocob.listar(pagina));
+                request.setAttribute("pagina", pagina);
+
+                request.getRequestDispatcher("Layout/PaginaEntregador/Cobranca/Listar-Cobranca.jsp").forward(request, response);
+            } else if (nivel.equals("F")) {
+                CobrancaDAOImpl dao = new CobrancaDAOImpl();
+                request.setAttribute("cobrancas", dao.listar(pagina));
+                request.setAttribute("pagina", pagina);
+
+                request.getRequestDispatcher("Layout/Cobranca/Listar-Cobranca.jsp?pagina=1&nivel=F").forward(request, response);
+            }
         } catch (Exception ex) {
             System.out.println("Problemas ao Listar Cobranca Controller! Erro: " + ex.getMessage());
             ex.printStackTrace();

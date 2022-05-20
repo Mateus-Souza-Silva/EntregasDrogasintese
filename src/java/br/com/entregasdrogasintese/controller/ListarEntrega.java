@@ -31,25 +31,6 @@ public class ListarEntrega extends HttpServlet {
             String nivel = request.getParameter("nivel");
 
             if (nivel.equals("E")) {
-                GenericDAO daoentr = new EntregaDAOImpl();
-                request.setAttribute("entrega", daoentr.listar());
-
-                //            listar cliente
-                GenericDAO daocliente = new ClienteDAOImpl();
-                request.setAttribute("cliente", daocliente.listar());
-
-//            listar entregador
-                GenericDAO daoentregador = new EntregadorDAOImpl();
-                request.setAttribute("entregador", daoentregador.listar());
-
-//            listar pagamento
-                GenericDAO daopagamento = new PagamentoDAOImpl();
-                request.setAttribute("pagamento", daopagamento.listar());
-
-//            listar situacao
-                GenericDAO daosituacao = new SituacaoDAOImpl();
-                request.setAttribute("situacao", daosituacao.listar());
-
                 request.getRequestDispatcher("DadosEntregadorLogado").forward(request, response);
             } else if (nivel.equals("F")) {
                 request.getRequestDispatcher("Layout/Entregas/Listar-Entregas.jsp?pagina=1&nivel=F").forward(request, response);

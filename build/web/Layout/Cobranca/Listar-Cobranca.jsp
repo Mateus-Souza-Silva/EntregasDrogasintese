@@ -69,14 +69,14 @@
             <nav aria-label="...">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina - 1%>">Voltar</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina - 1%>&nivel=F">Voltar</a>
                     </li>
                     <%
                         int paginas = tamanho / 10;
                         for (int i = 0; i <= paginas; i++) {
                     %>                    
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= i + 1%>"><%= i + 1%></a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= i + 1%>&nivel=F"><%= i + 1%></a>
                     </li>
                     <% ultimaPagina++;
                         } %>                    
@@ -88,7 +88,7 @@
                         }
                     %>
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina2 + 2%>">Próximo</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina2 + 2%>&nivel=F">Próximo</a>
                     </li>
                 </ul>
             </nav>

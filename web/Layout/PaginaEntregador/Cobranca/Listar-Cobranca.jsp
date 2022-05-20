@@ -49,7 +49,7 @@
                                 <td class="fundo${cobranca.situacao.descricao}">${cobranca.tipopagamento.descricao}</td>
                                 <td class="fundo${cobranca.situacao.descricao} corStatus${cobranca.situacao.descricao}">${cobranca.situacao.descricao}</td>
                                 <td class="fundo${cobranca.situacao.descricao}">
-                                    <a type="button" href="CarregarCobranca?cobrancaido=${cobranca.cobrancaido}" class="btn btn-dark">
+                                    <a type="button" href="CarregarCobranca?cobrancaido=${cobranca.cobrancaido}&nivel=E" class="btn btn-dark">
                                         <svg class="bi" width="16" height="16"><use xlink:href="#alterar"/></svg>
                                     </a>
                                 </td>
@@ -69,14 +69,14 @@
             <nav aria-label="...">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina - 1%>&nivel=F">Voltar</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina - 1%>&nivel=E">Voltar</a>
                     </li>
                     <%
                         int paginas = tamanho / 10;
                         for (int i = 0; i <= paginas; i++) {
                     %>                    
                     <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= i + 1%>&nivel=F"><%= i + 1%></a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= i + 1%>&nivel=E"><%= i + 1%></a>
                     </li>
                     <% ultimaPagina++;
                         } %>                    
@@ -88,7 +88,7 @@
                         }
                     %>
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina2 + 2%>&nivel=F">Próximo</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina2 + 2%>&nivel=E">Próximo</a>
                     </li>
                 </ul>
             </nav>

@@ -69,7 +69,15 @@ public class CadastrarCobranca extends HttpServlet {
                 } else {
                     mensagem = "Problemas ao alterar cobranca!";
                 }
-                request.getRequestDispatcher("ListarCobranca?pagina=1").forward(request, response);
+
+                String nivel = request.getParameter("nivel");
+
+                if (nivel.equals("E")) {
+                    request.getRequestDispatcher("ListarCobranca?pagina=1&nivel=E").forward(request, response);
+                } else if (nivel.equals("F")) {
+                    request.getRequestDispatcher("ListarCobranca?pagina=1&nivel=F").forward(request, response);
+                }
+
             }
 
         } catch (Exception ex) {

@@ -125,7 +125,7 @@
                         <div class="accordion-item bg-dark text-white">
                             <h2 class="accordion-header text-white" id="flush-headingSix">
                                 <div class="accordion-body tamanho-entregador">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCliente?pagina=1&nivel=E">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarClientema?pagina=1&nivel=E">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                                         Clientes
                                     </a>
