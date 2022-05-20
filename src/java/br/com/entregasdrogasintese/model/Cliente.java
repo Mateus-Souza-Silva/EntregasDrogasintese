@@ -11,6 +11,7 @@ public class Cliente extends Pessoa{
     private String complemento;
     private Cidade cidade;
     private String telefone;
+    private Integer totalRegistros;
 
     public Cliente() {
     }
@@ -105,5 +106,19 @@ public class Cliente extends Pessoa{
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+    
+    /**
+     * @return the totalRegistros
+     */
+    public Integer getTotalRegistros() {
+        return totalRegistros;
+    }
+
+    /**
+     * @param totalRegistros the totalRegistros to set
+     */
+    public void setTotalRegistros(Integer totalRegistros) {
+        this.totalRegistros = totalRegistros;
+    }   
     
 }

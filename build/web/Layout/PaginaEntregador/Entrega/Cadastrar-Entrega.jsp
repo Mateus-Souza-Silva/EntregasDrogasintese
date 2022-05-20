@@ -4,7 +4,7 @@
 <section>
     <div class="container-fluid">
         <h1 class="title-h1">Cadastrar Entrega</h1>
-        <form action="${pageContext.request.contextPath}\CadastrarEntrega" method="POST" class="row g-4">
+        <form action="${pageContext.request.contextPath}\CadastrarEntrega?nivel=E" method="POST" class="row g-4">
             <div class="row">
                 <div class="col-md-1">
                     <label for="entregaido" class="form-label">ID</label>
@@ -45,6 +45,7 @@
                 <div class="col-md-2">
                     <label for="pagamento" class="form-label">Pagamento</label>
                     <select class="form-select" aria-label="Lista de Formas de Pagamento" name="pagamentoido">
+                        <option value="">SELECIONAR</option>
                         <c:forEach var="pagamento" items="${pagamento}">
                             <option value="${pagamento.pagamentoido}" ${pagamento.pagamentoido==entrega.pagamento.pagamentoido?'selected':''}>${pagamento.descricao}</option>
                         </c:forEach>

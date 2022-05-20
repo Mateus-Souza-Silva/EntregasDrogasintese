@@ -137,6 +137,10 @@ select[readonly] {
     font-weight: bold !important;
 }
 
+.tamanho-entregador{
+    font-size: 0.6em;
+}
+
 
 $accordion-padding-y:                     1rem;
 $accordion-padding-x:                     1.25rem;

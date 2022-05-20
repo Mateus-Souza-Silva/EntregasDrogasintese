@@ -1,3 +1,5 @@
+<%@page import="br.com.entregasdrogasintese.model.Cliente"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../sidebar.jsp"/>
@@ -25,7 +27,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${cliente}" var="cliente">
+                        
+                        <%
+                            List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+                            Cliente cliente = clientes.get(0);
+                            int tamanho = cliente.getTotalRegistros();
+                            System.out.println("T: " + tamanho);
+                        %>
+                        
+                        <c:forEach items="${clientes}" var="cliente">
                             <tr>
                                 <th scope="row">${cliente.clienteido}</th>
                                 <td>${cliente.nome}</td>
@@ -46,18 +56,38 @@
                     </tbody>
                 </table>
             </div>
+            
+            <%
+                int ultimaPagina = 0;
+                int pagina = (Integer) request.getAttribute("pagina");
+                int pagina2 = pagina;
+                if (pagina == 1) {
+                    pagina = pagina + 1;
+                }
+            %>
             <nav aria-label="...">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <span class="page-link">Voltar</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <span class="page-link">2</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#">Próximo</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCliente?pagina=<%= pagina - 1%>">Voltar</a>
+                    </li>
+                    <%
+                        int paginas = tamanho / 10;
+                        for (int i = 0; i <= paginas; i++) {
+                    %>                    
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCliente?pagina=<%= i + 1%>"><%= i + 1%></a>
+                    </li>
+                    <% ultimaPagina++;
+                        } %>                    
+                    <%
+                        if (pagina == ultimaPagina) {
+                            System.out.println("entrou");
+                            pagina = pagina - 1;
+                            pagina2 = pagina2 - 1;
+                        }
+                    %>
+                    <li class="page-item">
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCliente?pagina=<%= pagina2 + 1%>">Próximo</a>
                     </li>
                 </ul>
             </nav>

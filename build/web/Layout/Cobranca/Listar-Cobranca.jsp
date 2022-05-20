@@ -88,7 +88,7 @@
                         }
                     %>
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina2 + 1%>">Próximo</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/ListarCobranca?pagina=<%= pagina2 + 2%>">Próximo</a>
                     </li>
                 </ul>
             </nav>

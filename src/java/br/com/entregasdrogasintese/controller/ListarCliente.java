@@ -16,9 +16,14 @@ public class ListarCliente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
+        
+        Integer pagina = Integer.parseInt(request.getParameter("pagina"));
+        
         try {
-            GenericDAO dao = new ClienteDAOImpl();
-            request.setAttribute("cliente", dao.listar());
+            ClienteDAOImpl dao = new ClienteDAOImpl();
+            
+            request.setAttribute("clientes", dao.listar(pagina));
+            request.setAttribute("pagina", pagina);
             
 //            request.getRequestDispatcher("DadosEntrega").forward(request, response);
 //            request.getRequestDispatcher("DadosCobranca").forward(request, response);

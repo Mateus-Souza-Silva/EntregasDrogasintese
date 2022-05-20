@@ -102,70 +102,35 @@
 
                         <div class="accordion-item bg-dark text-white">
                             <h2 class="accordion-header text-white" id="flush-headingSix">
-                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#entrega"/></svg>
-                                    Entregas
-                                </button>
-                            </h2>
-                            <div id="flush-collapseSix" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntrega">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
-                                        Listar
+                                <div class="accordion-body tamanho-entregador">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntrega?pagina=1&nivel=E">
+                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#entrega"/></svg>
+                                        Entregas
                                     </a>
                                 </div>
-                            </div>
+                            </h2>
                         </div>
 
                         <div class="accordion-item bg-dark text-white">
-                            <h2 class="accordion-header text-white" id="flush-headingOne">
-                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#cobranca"/></svg>
-                                    Cobrança
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCobranca">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
-                                        Listar
+                            <h2 class="accordion-header text-white" id="flush-headingSix">
+                                <div class="accordion-body tamanho-entregador">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCobranca?pagina=1&nivel=E">
+                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#cobranca"/></svg>
+                                        Cobrança
                                     </a>
                                 </div>
-                            </div>
+                            </h2>
                         </div>
 
                         <div class="accordion-item bg-dark text-white">
-                            <h2 class="accordion-header text-white" id="flush-headingFour">
-                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#cliente"/></svg>
-                                    Clientes
-                                </button>
-                            </h2>
-                            <div id="flush-collapseFour" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCliente">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
-                                        Listar
+                            <h2 class="accordion-header text-white" id="flush-headingSix">
+                                <div class="accordion-body tamanho-entregador">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCliente?pagina=1&nivel=E">
+                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                                        Clientes
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item bg-dark text-white">
-                            <h2 class="accordion-header text-white" id="flush-headingTwo">
-                                <button class="accordion-button collapsed text-white bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#relatorio"/></svg>
-                                    Relatórios
-                                </button>
                             </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse text-white collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body"><a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\Relatorio?param=4">
-                                        <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
-                                        Relatório de Entregas
-                                    </a></div>
-                                <div class="accordion-body">Teste Relatorio</div>
-                                <div class="accordion-body">Teste Relatorio</div>
-                            </div>
                         </div>
                         <a class="list-group-item botao-sair list-group-item-action text-white bg-dark p-3" href="${pageContext.request.contextPath}/Login?acao=logout">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#sair"/></svg>

@@ -60,7 +60,15 @@ public class CadastrarEntrega extends HttpServlet {
                 } else {
                     mensagem = "Problemas ao alterar entrega!";
                 }
-                request.getRequestDispatcher("ListarEntrega?pagina=1").forward(request, response);
+
+                String nivel = request.getParameter("nivel");
+
+                if (nivel.equals("E")) {
+                    request.getRequestDispatcher("ListarEntrega?pagina=1").forward(request, response);
+                } else if (nivel.equals("F")) {
+                    request.getRequestDispatcher("ListarEntrega?pagina=1&nivel=F").forward(request, response);
+                }
+
             }
         } catch (Exception ex) {
             System.out.println("Problemas ao cadastrar entrega! Erro: " + ex.getMessage());

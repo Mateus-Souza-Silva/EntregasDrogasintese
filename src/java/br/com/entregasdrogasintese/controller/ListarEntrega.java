@@ -1,7 +1,11 @@
 package br.com.entregasdrogasintese.controller;
 
+import br.com.entregasdrogasintese.dao.ClienteDAOImpl;
 import br.com.entregasdrogasintese.dao.EntregaDAOImpl;
+import br.com.entregasdrogasintese.dao.EntregadorDAOImpl;
 import br.com.entregasdrogasintese.dao.GenericDAO;
+import br.com.entregasdrogasintese.dao.PagamentoDAOImpl;
+import br.com.entregasdrogasintese.dao.SituacaoDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,14 +20,41 @@ public class ListarEntrega extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
-        
+
         Integer pagina = Integer.parseInt(request.getParameter("pagina"));
-        
+
         try {
             EntregaDAOImpl dao = new EntregaDAOImpl();
             request.setAttribute("entregas", dao.listar(pagina));
             request.setAttribute("pagina", pagina);
-            request.getRequestDispatcher("Layout/Entregas/Listar-Entregas.jsp").forward(request, response);
+
+            String nivel = request.getParameter("nivel");
+
+            if (nivel.equals("E")) {
+                GenericDAO daoentr = new EntregaDAOImpl();
+                request.setAttribute("entrega", daoentr.listar());
+
+                //            listar cliente
+                GenericDAO daocliente = new ClienteDAOImpl();
+                request.setAttribute("cliente", daocliente.listar());
+
+//            listar entregador
+                GenericDAO daoentregador = new EntregadorDAOImpl();
+                request.setAttribute("entregador", daoentregador.listar());
+
+//            listar pagamento
+                GenericDAO daopagamento = new PagamentoDAOImpl();
+                request.setAttribute("pagamento", daopagamento.listar());
+
+//            listar situacao
+                GenericDAO daosituacao = new SituacaoDAOImpl();
+                request.setAttribute("situacao", daosituacao.listar());
+
+                request.getRequestDispatcher("DadosEntregadorLogado").forward(request, response);
+            } else if (nivel.equals("F")) {
+                request.getRequestDispatcher("Layout/Entregas/Listar-Entregas.jsp?pagina=1&nivel=F").forward(request, response);
+            }
+
         } catch (Exception ex) {
             System.out.println("Problemas ao listar entregas! Erro: " + ex.getMessage());
             ex.printStackTrace();
