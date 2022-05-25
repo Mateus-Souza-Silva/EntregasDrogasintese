@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <input type="submit" class="btn botao-cadastrar" value="entrar"/>                
+                    <input type="submit" class="btn botao-cadastrar" value="Entrar"/>                
                 </div>
             </form>
         </div>

@@ -225,7 +225,7 @@
                                     </a>
                                 </div>
                                 <div class="accordion-body">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntrega?pagina=1&nivel=F">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntrega?pagina=1">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#listar"/></svg>
                                         Listar
                                     </a>

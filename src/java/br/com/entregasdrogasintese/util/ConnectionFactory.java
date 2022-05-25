@@ -9,7 +9,8 @@ public class ConnectionFactory {
     public static Connection getConnection() throws Exception{
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/entregasdrogasintese", "root", "");
+            //return DriverManager.getConnection("jdbc:mysql://localhost:3306/entregasdrogasintese", "root", "");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/entregasonline_entregasdrogasintese", "entregasonline_mateus", "entregasonline123");
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }

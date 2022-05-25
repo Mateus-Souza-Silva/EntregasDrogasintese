@@ -4,7 +4,7 @@
 <section>
     <div class="container-fluid">
         <h1 class="title-h1">Cadastrar Entrega</h1>
-        <form action="${pageContext.request.contextPath}\CadastrarEntrega?nivel=F" method="POST" class="row g-4">
+        <form action="${pageContext.request.contextPath}\CadastrarEntregaml=F" method="POST" class="row g-4">
             <div class="row">
                 <div class="col-md-1">
                     <label for="entregaido" class="form-label">ID</label>

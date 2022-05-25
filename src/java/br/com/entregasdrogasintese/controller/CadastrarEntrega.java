@@ -66,7 +66,7 @@ public class CadastrarEntrega extends HttpServlet {
                 if (nivel.equals("E")) {
                     request.getRequestDispatcher("ListarEntrega?pagina=1").forward(request, response);
                 } else if (nivel.equals("F")) {
-                    request.getRequestDispatcher("ListarEntrega?pagina=1&nivel=F").forward(request, response);
+                    request.getRequestDispatcher("ListarEntrega?pagina=1").forward(request, response);
                 }
 
             }

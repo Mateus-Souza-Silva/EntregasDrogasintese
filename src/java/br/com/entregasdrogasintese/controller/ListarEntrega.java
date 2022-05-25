@@ -6,6 +6,7 @@ import br.com.entregasdrogasintese.dao.EntregadorDAOImpl;
 import br.com.entregasdrogasintese.dao.GenericDAO;
 import br.com.entregasdrogasintese.dao.PagamentoDAOImpl;
 import br.com.entregasdrogasintese.dao.SituacaoDAOImpl;
+import br.com.entregasdrogasintese.model.Pessoa;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "ListarEntrega", urlPatterns = {"/ListarEntrega"})
 public class ListarEntrega extends HttpServlet {
@@ -21,19 +23,20 @@ public class ListarEntrega extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=ISO-8859-1");
 
+        HttpSession session = request.getSession(true);
+        Pessoa pessoa = (Pessoa) session.getAttribute("pessoalogada");
+        
         Integer pagina = Integer.parseInt(request.getParameter("pagina"));
 
         try {
             EntregaDAOImpl dao = new EntregaDAOImpl();
             request.setAttribute("entregas", dao.listar(pagina));
-            request.setAttribute("pagina", pagina);
+            request.setAttribute("pagina", pagina);            
 
-            String nivel = request.getParameter("nivel");
-
-            if (nivel.equals("E")) {
+            if (pessoa.getNivel().equals("E")) {
                 request.getRequestDispatcher("DadosEntregadorLogado").forward(request, response);
-            } else if (nivel.equals("F")) {
-                request.getRequestDispatcher("Layout/Entregas/Listar-Entregas.jsp?pagina=1&nivel=F").forward(request, response);
+            } else if (pessoa.getNivel().equals("F")) {
+                request.getRequestDispatcher("Layout/Entregas/Listar-Entregas.jsp?pagina=1").forward(request, response);
             }
 
         } catch (Exception ex) {

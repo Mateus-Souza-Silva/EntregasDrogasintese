@@ -16,7 +16,6 @@
                             <th scope="col">Id Entrega</th>
                             <th scope="col">Produtos</th>
                             <th scope="col">Valor</th>
-                            <th scope="col">Pagamento</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Alterar</th>
                         </tr>
@@ -27,7 +26,6 @@
                                 <th class="fundoEntrega${entrega.situacao.descricao}" scope="row">${entrega.entregaido}</th>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.produtos}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.valor}</td>
-                                <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.pagamento.descricao}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">${entrega.cliente.nome}</td>
                                 <td class="fundoEntrega${entrega.situacao.descricao}">
                                     <a type="button" href="${pageContext.request.contextPath}/CarregarEntrega?entregaido=${entrega.entregaido}&nivel=E" class="btn btn-dark">
@@ -35,7 +33,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr class="teste">
+                            <tr>
                                 <th class="fundoEntrega${entrega.situacao.descricao}" scope="row">Endereço</th>
                                 <td colspan="6" class="fundoEntrega${entrega.situacao.descricao}">${entrega.cliente.logradouro}</td>
                             </tr>
@@ -43,21 +41,6 @@
                     </tbody>
                 </table>
             </div>
-            <nav aria-label="...">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <span class="page-link">Voltar</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <span class="page-link">2</span>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Próximo</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </div>
 </section>

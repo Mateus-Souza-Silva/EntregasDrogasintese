@@ -103,7 +103,7 @@
                         <div class="accordion-item bg-dark text-white">
                             <h2 class="accordion-header text-white" id="flush-headingSix">
                                 <div class="accordion-body tamanho-entregador">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntrega?pagina=1&nivel=E">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarEntrega?pagina=1">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#entrega"/></svg>
                                         Entregas
                                     </a>
@@ -114,7 +114,7 @@
                         <div class="accordion-item bg-dark text-white">
                             <h2 class="accordion-header text-white" id="flush-headingSix">
                                 <div class="accordion-body tamanho-entregador">
-                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCobranca?pagina=1&nivel=E">
+                                    <a class="list-group-item-action text-white bg-dark" href="${pageContext.request.contextPath}\ListarCobranca?pagina=1">
                                         <svg class="bi me-2" width="16" height="16"><use xlink:href="#cobranca"/></svg>
                                         Cobrança
                                     </a>
